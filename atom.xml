@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>gogolk</title>
+  
+  <subtitle>开弓没有回头箭</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2018-08-01T11:32:29.034Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>lk</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Welcome My First Blog</title>
+    <link href="http://yoursite.com/2018/08/01/python/"/>
+    <id>http://yoursite.com/2018/08/01/python/</id>
+    <published>2018-08-01T10:26:26.000Z</published>
+    <updated>2018-08-01T11:32:29.034Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;Hello-World！&quot;&gt;&lt;a href=&quot;#Hello-World！&quot; class=&quot;headerlink&quot; title=&quot;Hello World！&quot;&gt;&lt;/a&gt;Hello
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
