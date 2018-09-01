@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[Welcome My First Blog]]></title>
-    <url>%2F2018%2F08%2F01%2Fpython%2F</url>
+    <title><![CDATA[request库应用Gettem开发 (1)]]></title>
+    <url>%2F2018%2F07%2F03%2FGettem1%2F</url>
+    <content type="text"><![CDATA[本项目是由python开发，利用requests库，操作方便的的自动预约实验软件。 ##工具 fiddler是一个网络抓包工具,简单来说使fidder成为一个中间代理，发送request将先发送给fidder，fidder再发送给服务器，服务器返回的response则先到达fidder再返回应用。Request是一个python第三方HTTP库，功能全面几乎可以实现任何的http请求任务, 包括GET、OPTIONS、HEAD、POST、PUT、PATCH、DELETE。在这些request中，可根据需要的更改header，body，cookie，data等，操作方便。此外，特别值得一提的是它包含一个会话对象requests.Session()，可以跨请求保持某些参数，例如cookie，不用手动添加cookie. 在对同一个服务器连续的发出请求时，底层的TCP将被复用，就不用每次发一个请求重新发送TCP连接请求，使性能显著提高。 ####1. 模拟登录浏览器打开网站，正常登录。通过fidder抓包。]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>requests</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2018%2F05%2F17%2Fpython%2F</url>
     <content type="text"><![CDATA[Hello World！]]></content>
   </entry>
 </search>

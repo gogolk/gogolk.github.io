@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-08-01T11:32:29.034Z</updated>
+  <updated>2018-09-01T09:35:04.966Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,38 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Welcome My First Blog</title>
-    <link href="http://yoursite.com/2018/08/01/python/"/>
-    <id>http://yoursite.com/2018/08/01/python/</id>
-    <published>2018-08-01T10:26:26.000Z</published>
-    <updated>2018-08-01T11:32:29.034Z</updated>
+    <title>request库应用Gettem开发 (1)</title>
+    <link href="http://yoursite.com/2018/07/03/Gettem1/"/>
+    <id>http://yoursite.com/2018/07/03/Gettem1/</id>
+    <published>2018-07-03T11:49:03.000Z</published>
+    <updated>2018-09-01T09:35:04.966Z</updated>
+    
+    <content type="html"><![CDATA[<p>本项目是由python开发，利用requests库，操作方便的的自动预约实验软件。  </p><p>##工具  </p><p><strong><a href="https://www.telerik.com/fiddler" target="_blank" rel="noopener">fiddler</a></strong>是一个网络抓包工具,简单来说使fidder成为一个中间代理，发送request将先发送给fidder，fidder再发送给服务器，服务器返回的response则先到达fidder再返回应用。<br><strong><a href="http://docs.python-requests.org/zh_CN/latest/" target="_blank" rel="noopener">Request</a></strong>是一个python第三方HTTP库，功能全面几乎可以实现任何的http请求任务, 包括GET、OPTIONS、HEAD、POST、PUT、PATCH、DELETE。在这些request中，可根据需要的更改header，body，cookie，data等，操作方便。此外，特别值得一提的是它包含一个会话对象<code>requests.Session()</code>，可以跨请求保持某些参数，例如cookie，不用手动添加cookie. 在对同一个服务器连续的发出请求时，底层的TCP将被复用，就不用每次发一个请求重新发送TCP连接请求，使性能显著提高。</p><p>####1. 模拟登录<br>浏览器打开网站，正常登录。通过fidder抓包。<br><img src="/2018/07/03/Gettem1/2018-09-01-Gettem1/login.jpg" alt="login"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;本项目是由python开发，利用requests库，操作方便的的自动预约实验软件。  &lt;/p&gt;
+&lt;p&gt;##工具  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.telerik.com/fiddler&quot; target=&quot;_blank&quot; rel=&quot;n
+      
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+      <category term="requests" scheme="http://yoursite.com/tags/requests/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://yoursite.com/2018/05/17/python/"/>
+    <id>http://yoursite.com/2018/05/17/python/</id>
+    <published>2018-05-17T10:26:26.000Z</published>
+    <updated>2018-08-31T11:54:54.635Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Hello-World！"><a href="#Hello-World！" class="headerlink" title="Hello World！"></a>Hello World！</h2>]]></content>
     
