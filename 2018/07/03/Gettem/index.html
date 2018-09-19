@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="python" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="gogolk" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="&amp;emsp;&amp;emsp;为解决学校电镜实验预约困难影响科研进展，我通过python开发了一个可自动预约电镜实验的程序。以下介绍分为5各部分：&amp;emsp;&amp;emsp;1. 项目背景。&amp;emsp;&amp;emsp;2. 工具介绍。&amp;emsp;&amp;emsp;3. requests模拟登录。&amp;emsp;&amp;emsp;4. requests模拟发送请求。&amp;emsp;&amp;emsp;5. 优化程序功能，自动化设置时间，并且">
+<meta property="og:type" content="article">
+<meta property="og:title" content="项目：Python开发自动预约实验软件Gettem">
+<meta property="og:url" content="http://yoursite.com/2018/07/03/Gettem/index.html">
+<meta property="og:site_name" content="gogolk">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;为解决学校电镜实验预约困难影响科研进展，我通过python开发了一个可自动预约电镜实验的程序。以下介绍分为5各部分：&amp;emsp;&amp;emsp;1. 项目背景。&amp;emsp;&amp;emsp;2. 工具介绍。&amp;emsp;&amp;emsp;3. requests模拟登录。&amp;emsp;&amp;emsp;4. requests模拟发送请求。&amp;emsp;&amp;emsp;5. 优化程序功能，自动化设置时间，并且">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/07/03/Gettem/login1.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/03/Gettem/login2.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/03/Gettem/login3.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/03/Gettem/post1.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/03/Gettem/run.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/03/Gettem/sign.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/03/Gettem/run2.png">
+<meta property="og:updated_time" content="2018-09-19T12:44:13.599Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="项目：Python开发自动预约实验软件Gettem">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;为解决学校电镜实验预约困难影响科研进展，我通过python开发了一个可自动预约电镜实验的程序。以下介绍分为5各部分：&amp;emsp;&amp;emsp;1. 项目背景。&amp;emsp;&amp;emsp;2. 工具介绍。&amp;emsp;&amp;emsp;3. requests模拟登录。&amp;emsp;&amp;emsp;4. requests模拟发送请求。&amp;emsp;&amp;emsp;5. 优化程序功能，自动化设置时间，并且">
+<meta name="twitter:image" content="http://yoursite.com/2018/07/03/Gettem/login1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/03/Gettem/"/>
+
+
+
+
+
+  <title>项目：Python开发自动预约实验软件Gettem | gogolk</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gogolk</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">开弓没有回头箭</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-message">
+          <a href="/message" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/03/Gettem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lk">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gogolk">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">项目：Python开发自动预约实验软件Gettem</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-03T19:49:03+08:00">
+                2018-07-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/项目/" itemprop="url" rel="index">
+                    <span itemprop="name">项目</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/07/03/Gettem/" class="leancloud_visitors" data-flag-title="项目：Python开发自动预约实验软件Gettem">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&emsp;&emsp;为解决学校电镜实验预约困难影响科研进展，我通过python开发了一个可自动预约电镜实验的程序。以下介绍分为5各部分：<br>&emsp;&emsp;<strong>1.</strong> 项目背景。<br>&emsp;&emsp;<strong>2.</strong> 工具介绍。<br>&emsp;&emsp;<strong>3.</strong> requests模拟登录。<br>&emsp;&emsp;<strong>4.</strong> requests模拟发送请求。<br>&emsp;&emsp;<strong>5.</strong> 优化程序功能，自动化设置时间，并且图形化软件。<br>&emsp;&emsp;<strong>6.</strong> 转换成exe文件，便于操作与分享。<br>&emsp;&emsp;<strong>7.</strong> 总结<br><a id="more"></a>  </p>
+<h2 id="项目背景"><a href="#项目背景" class="headerlink" title="项目背景"></a>项目背景</h2><p>&emsp;&emsp;透射电镜可以算是每个高校学术研究的稀缺资源，尤其在材料领域大多数研究都离不开透射电镜。本校的电镜可预约时间为每周一到周五，上午8:30-11:30和下午14:30-15:30共十个时间段.而每个时间段开放预约时间为前一周该时间段结束时间前后。这种狼多肉少的情况使得大家预约电镜非常困难，甚至有时候课题组两周都约不到一次，科研进展受到影响。所以，这个项目完成后可以很好的解决以上问题。</p>
+<h2 id="工具介绍"><a href="#工具介绍" class="headerlink" title="工具介绍"></a>工具介绍</h2><h3 id="Fiddler"><a href="#Fiddler" class="headerlink" title="Fiddler:"></a><a href="https://www.telerik.com/fiddler" target="_blank" rel="noopener">Fiddler</a>:</h3><p>一款开源的网络抓包工具,简单来说使fidder成为一个客户端与服务器的中间代理，客户端发送request将先发送给fidder，fidder再转发送给服务器，服务器返回的response则先到达fidder再返回客户端。</p>
+<h3 id="Requests"><a href="#Requests" class="headerlink" title="Requests:"></a><a href="http://docs.python-requests.org/zh_CN/latest/" target="_blank" rel="noopener">Requests</a>:</h3><p>一个Python第三方HTTP库，功能全面几乎可以实现任何的http请求任务, 包括GET、OPTIONS、HEAD、POST、PUT、PATCH、DELETE。在这些request中，可根据需要的更改header，body，cookie，data等，操作方便。此外，特别值得一提的是它包含一个会话对象<code>requests.Session()</code>，可以跨请求保持某些参数，例如cookie，不用手动添加cookie. 在对同一个服务器连续的发出请求时，底层的TCP将被复用，就不用每发一个请求重新发送TCP连接请求，使性能显著提高。</p>
+<h3 id="Tkinter"><a href="#Tkinter" class="headerlink" title="Tkinter:"></a><a href="https://docs.python.org/2/library/tkinter.html" target="_blank" rel="noopener">Tkinter</a>:</h3><p>一个Python的标准GUI库。使用Tkinter可以快速的创建GUI应用程序。操作简单，可以满足大多数图形化需求。</p>
+<h2 id="requests模拟登录"><a href="#requests模拟登录" class="headerlink" title="requests模拟登录"></a>requests模拟登录</h2><p>&emsp;&emsp;浏览器打开网站，正常登录。通过fidder抓包。可以发现有以下request<br><img src="/2018/07/03/Gettem/login1.png" alt="img">&emsp;&emsp;可以发现登录发送表单所需数据为userName，password和enter.除此之外，我们还可以发现服务器返回的是302，重定向。继续跟踪可发现还需向目标网址发送一个表单<br><img src="/2018/07/03/Gettem/login2.png" alt="img">&emsp;&emsp;表单需要的数据可以发现在重定向后发送请求中的response中。<br><img src="/2018/07/03/Gettem/login3.png" alt="img">&emsp;&emsp;综上，操作顺序为：发送请求（账号，密码）→在获得的重定向response中抓取信息→再发送请求→登录成功，编写代码如下<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request</span><br><span class="line"><span class="comment">#定义会话</span></span><br><span class="line">se = request.Session()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(userName, passWord)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    登录</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    res = se.get(loginurl, timeout=<span class="number">15</span>)</span><br><span class="line">    <span class="keyword">if</span> res.status_code == <span class="number">200</span>:</span><br><span class="line">        form_data = &#123;</span><br><span class="line">            <span class="string">"userName"</span>: userName,</span><br><span class="line">            <span class="string">"passWord"</span>: passWord,</span><br><span class="line">            <span class="string">"enter"</span>: <span class="keyword">True</span></span><br><span class="line">                &#125;</span><br><span class="line">        res = se.post(self.loginurl, form_data)</span><br><span class="line">        <span class="comment">#正则抓取toke_id</span></span><br><span class="line">        token_id = search(compile(<span class="string">'&lt;input name="tokenId" type="hidden" value="(.*?)"'</span>), res.content.decode(<span class="string">'utf-8'</span>)).group(<span class="number">1</span>) </span><br><span class="line">        form_data_2 = &#123;</span><br><span class="line">            <span class="string">"tokenId"</span>: token_id,</span><br><span class="line">            <span class="string">"account"</span>: userName,</span><br><span class="line">            <span class="string">"Thirdsys"</span>: <span class="string">"dxsbgxxt"</span></span><br><span class="line">            &#125;</span><br><span class="line">        login_url = <span class="string">'http:/xxxxxx.com'</span></span><br><span class="line">        <span class="comment">#跟进header，测试后其实不改也没关系。这里只是为了模拟浏览器更像一点。</span></span><br><span class="line">        se.update(&#123;<span class="string">'Referer'</span>: <span class="string">'http://xxxxxx.com'</span>&#125;)</span><br><span class="line">        se.post(login_url, form_data_2)</span><br><span class="line">        se.session.cookies.set(<span class="string">'ASP.NET_SessionId'</span>,<span class="keyword">None</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"><span class="comment">#测试一下</span></span><br><span class="line"><span class="keyword">if</span> __main__ == <span class="string">'__name__'</span>:</span><br><span class="line">    userName = input(<span class="string">'输入账号’)</span></span><br><span class="line"><span class="string">    passWord = input('</span>输入密码<span class="string">')</span></span><br><span class="line"><span class="string">    login(userName, passWord)</span></span><br></pre></td></tr></table></figure><br>&emsp;&emsp;测试完成登录成功，接下来实现模拟浏览器发送表单</p>
+<h2 id="requests模拟发送请求"><a href="#requests模拟发送请求" class="headerlink" title="requests模拟发送请求"></a>requests模拟发送请求</h2><p>&emsp;&emsp;首先分析出表单所需要的数据，通过浏览器预约一个是简单的实验。同样通过fidder抓包分析，在此过程中，我们可以通过断点来判断一共发送了哪些请求，哪些求中是必须的，哪些请求又是可以省去的，因为毕竟我们需要快速预约，所以要把过程做的最精简。通过断点测试我们发现有如下请求发送出去<br><img src="/2018/07/03/Gettem/post1.png" alt="img"><br>&emsp;&emsp;一共7个request…其中有4个post,分析这些post所需数据,分析数据来源,处理成所需数据格式，最终代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OrderTEM</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    物镜球差电镜预约</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, user, pwd, payload, id_, st, et, sample, project, i)</span>:</span></span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        定义会话，初始化表单。</span></span><br><span class="line"><span class="string">        params &#123;</span></span><br><span class="line"><span class="string">        user:用户名</span></span><br><span class="line"><span class="string">        pwd: 密码</span></span><br><span class="line"><span class="string">        payload, id_为申请表单所需数据，不同用户数据不同，在注册过程中记录。</span></span><br><span class="line"><span class="string">        st: 预约时间段开始时间</span></span><br><span class="line"><span class="string">        et: 预约时间段结束时间</span></span><br><span class="line"><span class="string">        sample: 样品</span></span><br><span class="line"><span class="string">        project: 项目编号</span></span><br><span class="line"><span class="string">        i: 控制多线程可以均匀发表的编号，i越高，发送请求的开始时间越晚</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        self.user = user</span><br><span class="line">        self.pwd = pwd</span><br><span class="line">        self.payload = payload</span><br><span class="line">        self.id = id_</span><br><span class="line">        self.st = st</span><br><span class="line">        self.et = et</span><br><span class="line">        self.i = i</span><br><span class="line">        self.session = requests.session()</span><br><span class="line">        self.update = self.session.headers.update</span><br><span class="line">        self.get = self.session.get</span><br><span class="line">        self.post = self.session.post</span><br><span class="line">        self.loginurl = (<span class="string">r'http://xxxxxx.com'</span>)</span><br><span class="line">        self.headers1 = &#123;<span class="string">'User-Agent'</span>:<span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36'</span>,</span><br><span class="line">           <span class="string">'Accept-Encoding'</span>: <span class="string">'gzip, deflate'</span>,</span><br><span class="line">           <span class="string">'Accept-Language'</span>:<span class="string">'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2'</span>,</span><br><span class="line">           <span class="string">'Accept'</span>:<span class="string">'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'</span>,</span><br><span class="line">           <span class="string">'Upgrade-Insecure-Requests'</span>:<span class="string">'1'</span>,</span><br><span class="line">        &#125;</span><br><span class="line">        self.headers2 =  &#123;<span class="string">'Referer'</span>: <span class="keyword">None</span>&#125;</span><br><span class="line">        self.session.headers.update(self.headers1)</span><br><span class="line">        <span class="comment">#初始化申请实验表单</span></span><br><span class="line">        self.form_data_1 = &#123;</span><br><span class="line">                    <span class="string">"_ajax"</span>: <span class="number">1</span>,</span><br><span class="line">                    <span class="string">"_object"</span>: <span class="string">"component_form"</span>,</span><br><span class="line">                    <span class="string">"_event"</span>: <span class="string">"submit"</span>,</span><br><span class="line">                    <span class="string">"cal_week_rel"</span>: <span class="string">''</span>,</span><br><span class="line">                    <span class="string">"mode"</span>: <span class="string">"week"</span>,</span><br><span class="line">                    <span class="string">"component_id"</span>: <span class="number">0</span>,</span><br><span class="line">                    <span class="string">"calendar_id"</span>: <span class="number">7</span>,</span><br><span class="line">                    <span class="string">"name123"</span>: <span class="string">"仪器使用预约"</span>,</span><br><span class="line">                    <span class="string">"dtstart"</span>: self.st,</span><br><span class="line">                    <span class="string">"dtend"</span>: self.et,</span><br><span class="line">                    <span class="string">"project"</span>: project,</span><br><span class="line">                    <span class="string">"description"</span>: <span class="string">''</span>,</span><br><span class="line">                    <span class="string">"extra_fields[12]"</span>: sample,</span><br><span class="line">                    <span class="string">"extra_fields[13][块体]"</span>: <span class="string">'null'</span>,</span><br><span class="line">                    <span class="string">'extra_fields[13][粉末]'</span>: <span class="string">'on'</span>,</span><br><span class="line">                    <span class="string">'extra_fields[13][有无磁性]'</span>: <span class="string">'null'</span>,</span><br><span class="line">                    <span class="string">'extra_fields[14][TEM]'</span>: <span class="string">'on'</span>,</span><br><span class="line">                    <span class="string">'extra_fields[14][HRTEM]'</span>: <span class="string">'on'</span>,</span><br><span class="line">                    <span class="string">'extra_fields[14][STEM]'</span>: <span class="string">'null'</span>,</span><br><span class="line">                    <span class="string">'extra_fields[14][STEM+mapping]'</span>: <span class="string">'null'</span>,</span><br><span class="line">                    <span class="string">'extra_fields[14][EDS]'</span>: <span class="string">'null'</span>,</span><br><span class="line">                    <span class="string">'submit'</span>: <span class="string">'save'</span></span><br><span class="line">                    &#125;</span><br><span class="line">        self.form_data_2 = &#123;<span class="string">'_ajax'</span>: <span class="number">1</span>,</span><br><span class="line">                      <span class="string">'_object'</span>: <span class="string">'socket'</span>,</span><br><span class="line">                      <span class="string">'_event'</span>: <span class="string">'auth'</span>,</span><br><span class="line">                      <span class="string">'cal_week_rel'</span>: <span class="string">''</span>,</span><br><span class="line">                      <span class="string">'code'</span> : <span class="string">''</span> &#125;</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        登录</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        res = self.get(self.loginurl, timeout=<span class="number">15</span>)</span><br><span class="line">        <span class="keyword">if</span> res.status_code == <span class="number">200</span>:</span><br><span class="line">            form_data = &#123;</span><br><span class="line">                <span class="string">"userName"</span>: self.user,</span><br><span class="line">                <span class="string">"passWord"</span>: self.pwd,</span><br><span class="line">                <span class="string">"enter"</span>: <span class="keyword">True</span></span><br><span class="line">                    &#125;</span><br><span class="line">            res = self.post(self.loginurl, form_data)</span><br><span class="line">            self.logincookies = self.session.cookies.get_dict()</span><br><span class="line">            token_id = search(compile(<span class="string">'&lt;input name="tokenId" type="hidden" value="(.*?)"'</span>), res.content.decode(<span class="string">'utf-8'</span>)).group(<span class="number">1</span>)</span><br><span class="line">            form_data_3 = &#123;</span><br><span class="line">                <span class="string">"tokenId"</span>: token_id,</span><br><span class="line">                <span class="string">"account"</span>: self.user,</span><br><span class="line">                <span class="string">"Thirdsys"</span>: <span class="string">"dxsbgxxt"</span></span><br><span class="line">                &#125;</span><br><span class="line">            login_url = <span class="string">'http://xxxxxx.com'</span></span><br><span class="line">            self.update(&#123;<span class="string">'Referer'</span>: <span class="string">'http://xxxxx.com'</span>&#125;)</span><br><span class="line">            self.post(login_url, form_data_3)</span><br><span class="line">            self.session.cookies.set(<span class="string">'ASP.NET_SessionId'</span>,<span class="keyword">None</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> <span class="string">'网络异常！'</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">perpareform</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        爬取目标页面并解析表单所需的数据</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        url = <span class="string">'http://xxxxx.com'</span></span><br><span class="line">        <span class="comment">#??self.session.headers.update(self.headers2)</span></span><br><span class="line">        res1 = self.get(url)</span><br><span class="line">        self.update(&#123;<span class="string">'Referer'</span>: <span class="string">'http://xxxxx.com'</span>, <span class="string">'Upgrade-Insecure-Requests'</span>: <span class="keyword">None</span>&#125;)</span><br><span class="line">        content_1 = res1.content.decode(<span class="string">'utf-8'</span>)</span><br><span class="line">        partern_1 =  compile(<span class="string">'"browser_[^"]+?" src="(http://xxxxx\?browser_id=(.+?)&amp;amp;st=(.+?)&amp;amp;ed=(.+?)&amp;amp;.+?form_token(.+?))"'</span>)</span><br><span class="line">        content_1 = search(partern_1, content_1)</span><br><span class="line">        post_url = content_1.group(<span class="number">1</span>)</span><br><span class="line">        browser_id = content_1.group(<span class="number">2</span>)</span><br><span class="line">        st2 = content_1.group(<span class="number">3</span>)</span><br><span class="line">        ed = content_1.group(<span class="number">4</span>)</span><br><span class="line">        form_token = content_1.group(<span class="number">5</span>)</span><br><span class="line">        post_url = sub(compile(<span class="string">'amp;'</span>),<span class="string">''</span>,post_url)</span><br><span class="line">        res2 = self.get(post_url)</span><br><span class="line">        content_2 = res2.content.decode(<span class="string">'utf-8'</span>)</span><br><span class="line">        <span class="comment">#id="calweek_5b25321017f43" </span></span><br><span class="line">        partern_2 = compile(<span class="string">'id="(calweek_.+?)"'</span>)</span><br><span class="line">        cal_week_rel = search(partern_2,content_2).group(<span class="number">1</span>)</span><br><span class="line">        self.form_data_1[<span class="string">'cal_week_rel'</span> ] = cal_week_rel</span><br><span class="line">        <span class="keyword">return</span> post_url, browser_id, st2, ed, form_token, cal_week_rel</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">postform</span><span class="params">(self,post_url, browser_id, st2, ed, form_token, cal_week_rel)</span>:</span></span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        利用爬取到的数据填写表单并发送多个申请。</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        res3 = self.post(post_url,self.form_data_1)</span><br><span class="line">        self.update(&#123;<span class="string">'Accept'</span>: <span class="string">'*/*'</span>&#125;)</span><br><span class="line">        content_3 = res3.content.decode(<span class="string">'utf-8'</span>)</span><br><span class="line">        <span class="comment">#\" id=\"uuid_5b253c614b5cd\"&gt;\  </span></span><br><span class="line">        uuid = search(compile(<span class="string">r'(uuid_.+?)\\'</span>),content_3).group(<span class="number">1</span>)</span><br><span class="line">        <span class="comment">#params = &#123;'EIO': 3, 'transport': 'polling', 't': str(int(datetime.now().timestamp * 10*3)) + '-0'&#125;</span></span><br><span class="line">        res4 = self.session.get(<span class="string">'http://xxxxxx.com'</span>,params=&#123;<span class="string">'EIO'</span>: <span class="string">'3'</span>, <span class="string">'transport'</span>: <span class="string">'polling'</span>, <span class="string">'t'</span>: str(int(datetime.now().timestamp()*(<span class="number">10</span>**<span class="number">3</span>)))+<span class="string">'-0'</span>&#125;)   </span><br><span class="line">        content_4 = res4.content</span><br><span class="line">        sid = search(compile(<span class="string">'"sid":"(.+?)"'</span>),str(content_4)).group(<span class="number">1</span>)</span><br><span class="line">        self.session.get(<span class="string">'http://xxxxxx/socket.io/'</span>,params=&#123;<span class="string">'EIO'</span>: <span class="string">'3'</span>, <span class="string">'transport'</span>: <span class="string">'polling'</span>, <span class="string">'t'</span>: str(int(datetime.now().timestamp()*(<span class="number">10</span>**<span class="number">3</span>)))+<span class="string">'-1'</span>,<span class="string">'sid'</span>: sid&#125;)   </span><br><span class="line">        self.update(&#123;<span class="string">'Origin'</span>: <span class="string">'http://xxxxxx.com'</span>,<span class="string">'Content-Type'</span>: <span class="string">'text/plain;charset=UTF-8'</span>&#125;)</span><br><span class="line">        self.post(<span class="string">'http://xxxxxx/socket.io/'</span>,params=&#123;<span class="string">'EIO'</span>: <span class="string">'3'</span>, <span class="string">'transport'</span>: <span class="string">'polling'</span>, <span class="string">'t'</span>: str(int(datetime.now().timestamp()*(<span class="number">10</span>**<span class="number">3</span>)))+<span class="string">'-2'</span>,<span class="string">'sid'</span>: sid&#125;,data = self.payload)   </span><br><span class="line">        self.update(&#123;<span class="string">'Origin'</span>: <span class="keyword">None</span>, <span class="string">'Content-Type'</span>: <span class="keyword">None</span>&#125;)</span><br><span class="line">        res7 = self.get(<span class="string">'http://xxxxxx/socket.io/'</span>,params=&#123;<span class="string">'EIO'</span>: <span class="string">'3'</span>, <span class="string">'transport'</span>: <span class="string">'polling'</span>, <span class="string">'t'</span>: str(int(datetime.now().timestamp()*(<span class="number">10</span>**<span class="number">3</span>)))+<span class="string">'-3'</span>,<span class="string">'sid'</span>: sid&#125;)   </span><br><span class="line">        content_7 = str(res7.content)</span><br><span class="line">        code = search(compile(<span class="string">'"code":"(.+?)"'</span>),content_7).group(<span class="number">1</span>)</span><br><span class="line">        self.form_data_2[<span class="string">'code'</span>] = code</span><br><span class="line">        res8 = self.post(<span class="string">'http://xxxxxx.com'</span>,data = self.form_data_2)</span><br><span class="line">        content_8 =str(res8.content)</span><br><span class="line">        newcode = search(compile(<span class="string">'"code":"(.+?)"'</span>),content_8).group(<span class="number">1</span>)</span><br><span class="line">        newcode = sub(<span class="string">r'\\'</span>,<span class="string">''</span>,newcode)</span><br><span class="line">        self.update(&#123;<span class="string">'Content-Type'</span>:<span class="string">'text/plain;charset=UTF-8'</span>&#125;) </span><br><span class="line">        payload2 = <span class="string">r'1048:42["yiqikong-reserv",&#123;"form":"&#123;\"cal_week_rel\":\"%s\",\"mode\":\"week\",\"component_id\":\"0\",\"calendar_id\":\"7\",\"name\":\"\\u4eea\\u5668\\u4f7f\\u7528\\u9884\\u7ea6\",\"dtstart\":%d,\"dtend\":%d,\"project\":\"1074\",\"description\":\"\",\"extra_fields\":&#123;\"12\":\"\",\"13\":&#123;\"\\u5757\\u4f53\":\"on\",\"\\u7c89\\u672b\":\"null\",\"\\u6709\\u65e0\\u78c1\\u6027\":\"null\"&#125;,\"14\":&#123;\"TEM\":\"on\",\"HRTEM\":\"on\",\"STEM\":\"null\",\"STEM+mapping\":\"null\",\"EDS\":\"null\"&#125;&#125;,\"submit\":\"save\",\"browser_id\":\"%s\",\"st\":\"%s\",\"ed\":\"%s\",\"equipment_id\":\"10\",\"form_token\":\"%s\",\"id\":\"7\",\"currentUserId\":\"%s\",\"SITE_ID\":\"cf\",\"LAB_ID\":\"xxx\",\"tube\":\"8fcab38c0b49b43aaf3d13888fe9444066f3940d\",\"uuid\":\"%s\"&#125;","code":"%s"&#125;]'</span> %(cal_week_rel, self.st, self.et, browser_id, st2, ed, form_token, self.id,  uuid, newcode)</span><br><span class="line">        self.post(<span class="string">'http://xxxxxx/socket.io/'</span>,params=&#123;<span class="string">'EIO'</span>: <span class="string">'3'</span>, <span class="string">'transport'</span>: <span class="string">'polling'</span>, <span class="string">'t'</span>: str(int(datetime.now().timestamp()*(<span class="number">10</span>**<span class="number">3</span>)))+<span class="string">'-5'</span>,<span class="string">'sid'</span>: sid&#125;,data = payload2)   </span><br><span class="line">        self.update(&#123;<span class="string">'Content-Type'</span>: <span class="keyword">None</span>&#125;)</span><br></pre></td></tr></table></figure>  </p>
+<p>&emsp;&emsp;最开始没有设置i, 而是直接让10个线程不间断的发送请求，但是测试后发现预约成功率并不高， 分析得知该程序设计为同步发送，所以每次发送请求后必须要等到请求返回才发下一次的请求，而开放预约时间前后因用户请求暴增导致服务器返回请求缓慢，有时候达到了2s以上，这样会导致在预约时间开放之前我发送的表单还没返回的时候开放预约，而此各个线程要等到返回才发送请求，导致预约失败。于是改进程序，通过<code>self.et - datetime.now().timestamp() - 604800 - 20 + self.i * 0.25 &lt; 0  
+BEGIN POST</code>为每个线程设置发送表单的开始时间,间隔为0.25s循环发送申请。并通过记录开始发送请求到最后返回请求的时间，让线程<code>sleep (max(2.5 - end + start,0))</code>，使各个线程均匀间隔2.5s发送一个请求，总体上实现均匀0.25s发送一次申请，调度程序代码如下<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main_1</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    调度程序；</span></span><br><span class="line"><span class="string">    登录&gt; 抓取必要元素并填写表单 &gt; 提交表单</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    self.login()</span><br><span class="line">    sleep(<span class="number">10</span>)</span><br><span class="line">    post_url, browser_id, st2, ed, form_token, cal_week_rel = self.perpareform()</span><br><span class="line">    <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">while</span> self.et - datetime.now().timestamp() - <span class="number">604800</span> - <span class="number">20</span> + self.i * <span class="number">0.25</span> &lt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    start = datetime.now().timestamp()</span><br><span class="line">                    self.postform(post_url, browser_id, st2, ed, form_token, cal_week_rel)</span><br><span class="line">                    <span class="keyword">if</span> self.et - datetime.now().timestamp() - <span class="number">604800</span> + <span class="number">10</span> &lt; <span class="number">0</span>:</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">                    end = datetime.now().timestamp()</span><br><span class="line">                    sleep (max(<span class="number">2.5</span> - end + start,<span class="number">0</span>))</span><br><span class="line">                <span class="keyword">except</span>:</span><br><span class="line">                    <span class="keyword">pass</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> self.et - datetime.now().timestamp() - <span class="number">604800</span> + <span class="number">10</span> &lt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="优化程序功能-自动计算预约时间；注册功能；图形化设计"><a href="#优化程序功能-自动计算预约时间；注册功能；图形化设计" class="headerlink" title="优化程序功能; 自动计算预约时间；注册功能；图形化设计"></a>优化程序功能; 自动计算预约时间；注册功能；图形化设计</h2><h3 id="自动计算预约时间"><a href="#自动计算预约时间" class="headerlink" title="自动计算预约时间"></a>自动计算预约时间</h3><p>&emsp;&emsp;因为预约开放时间是固定的，所以每次欲预约的实验时间是可以预算的，即下周上午或者下午，若在11:30之前，预约时间为下周8:30-11:30，超过11:30直到下午5:30，即预约下周下午时间段。所以可以设置一个默认时间，而自定义时间是因为有些同学经过培训可以预约中午或者晚上。添加一个getst模块。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">getst</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, opt, equipment = None, ymd = None, date2 = None )</span>:</span></span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        opt:用户选择自定义时间还是默认,</span></span><br><span class="line"><span class="string">        equipment:选择设备，因为设备不同中午时间有所</span></span><br><span class="line"><span class="string">        ymd, date2: 用户自定义选择的时间。</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        self.opt = opt</span><br><span class="line">        self.ymd = ymd</span><br><span class="line">        self.date2 = date2</span><br><span class="line">        self.equipment = equipment</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">default</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        默认时间，根据当前时间计算出最近即将开放的时间段。</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        today = datetime.now()</span><br><span class="line">        t = (today.hour,today.minute)</span><br><span class="line">        <span class="keyword">if</span>  t &lt; (<span class="number">11</span>,<span class="number">31</span>):</span><br><span class="line">            st = datetime(today.year, today.month, today.day, <span class="number">8</span>, <span class="number">30</span>, <span class="number">0</span>  ).timestamp() + <span class="number">604800</span></span><br><span class="line">        <span class="keyword">elif</span> t &lt; (<span class="number">17</span>,<span class="number">31</span>):</span><br><span class="line">            st = datetime(today.year, today.month, today.day, <span class="number">14</span>, <span class="number">30</span>, <span class="number">0</span> ).timestamp() + <span class="number">604800</span></span><br><span class="line">        <span class="keyword">else</span>:    </span><br><span class="line">            st = datetime(today.year, today.month, today.day, <span class="number">8</span>, <span class="number">30</span>, <span class="number">0</span> ).timestamp() + <span class="number">691200</span></span><br><span class="line">        <span class="keyword">return</span> int(st)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">userdefined</span><span class="params">(self, ymd, date2, equipment)</span>:</span></span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        自定义预约时间</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        <span class="comment">#ymd is dict,&#123;'year':year,....&#125;</span></span><br><span class="line">        <span class="keyword">if</span> date2 == <span class="string">'早'</span>:</span><br><span class="line">            st = int(datetime(ymd[<span class="string">'year'</span>], ymd[<span class="string">'month'</span>], ymd[<span class="string">'day'</span>], <span class="number">8</span>, <span class="number">30</span>, <span class="number">0</span>).timestamp())</span><br><span class="line">        <span class="keyword">elif</span> date2 == <span class="string">'下午'</span>:</span><br><span class="line">            st = int(datetime(ymd[<span class="string">'year'</span>], ymd[<span class="string">'month'</span>], ymd[<span class="string">'day'</span>], <span class="number">14</span>, <span class="number">30</span>, <span class="number">0</span>).timestamp())</span><br><span class="line">        <span class="keyword">elif</span> date2 == <span class="string">'晚上'</span>:</span><br><span class="line">            st = int(datetime(ymd[<span class="string">'year'</span>], ymd[<span class="string">'month'</span>], ymd[<span class="string">'day'</span>], <span class="number">19</span>, <span class="number">0</span>, <span class="number">0</span>).timestamp())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> equipment == <span class="string">'1'</span>:</span><br><span class="line">                st = int(datetime(ymd[<span class="string">'year'</span>], ymd[<span class="string">'month'</span>], ymd[<span class="string">'day'</span>], <span class="number">12</span>, <span class="number">0</span>, <span class="number">0</span>).timestamp())</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                st = int(datetime(ymd[<span class="string">'year'</span>], ymd[<span class="string">'month'</span>], ymd[<span class="string">'day'</span>], <span class="number">11</span>, <span class="number">45</span>, <span class="number">0</span>).timestamp())</span><br><span class="line">        <span class="keyword">return</span> int(st)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getst</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        return: start time</span></span><br><span class="line"><span class="string">        根据用户选择默认或自定义</span></span><br><span class="line"><span class="string">        默认则为下一次可预约时间</span></span><br><span class="line"><span class="string">        自定义则约抢任意时间，包括针对管理员的中午时间段和晚上时间段。</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        <span class="keyword">if</span> self.opt == <span class="string">'userdefind'</span>:</span><br><span class="line">            <span class="keyword">return</span> self.userdefined(self.ymd, self.date2, self.equipment)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> self.default()</span><br></pre></td></tr></table></figure>  </p>
+<h3 id="多个实验预约整合在一起-多线程"><a href="#多个实验预约整合在一起-多线程" class="headerlink" title="多个实验预约整合在一起; 多线程"></a>多个实验预约整合在一起; 多线程</h3><p>&emsp;&emsp; 以上已经完成了模拟登录，模拟发送表单，自动获得预约时间，下面将整合输入，整合所有实验模块，并实现多线程。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gettem</span><span class="params">(name, equipment, sample, project, time, log_, date = None, date2 = None)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    name: 用户名</span></span><br><span class="line"><span class="string">    equipment: 目标设备</span></span><br><span class="line"><span class="string">    sample: 样品名</span></span><br><span class="line"><span class="string">    project: 项目号码</span></span><br><span class="line"><span class="string">    time: 时间选择(默认，自定义)</span></span><br><span class="line"><span class="string">    log_: 日志</span></span><br><span class="line"><span class="string">    date: 自定义日期</span></span><br><span class="line"><span class="string">    date2: 自定义时间段</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="comment">#------------------------------------------------------------------------#</span></span><br><span class="line">    <span class="keyword">if</span> time ==<span class="string">'userdefind'</span>:</span><br><span class="line">        st = getst(<span class="string">'userdefind'</span>, equipment, date, date2).getst()</span><br><span class="line">        <span class="keyword">if</span> date2 != <span class="string">'中'</span>:</span><br><span class="line">            et = st + <span class="number">10799</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            et = st + <span class="number">8999</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        st = getst(<span class="string">'default'</span>).getst()</span><br><span class="line">        et = st + <span class="number">10799</span></span><br><span class="line">    <span class="keyword">if</span> equipment == <span class="number">1</span>:</span><br><span class="line">        log_.insert(<span class="string">'end'</span>,<span class="string">'准备预约：球差\n'</span> )</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        log_.insert(<span class="string">'end'</span>,<span class="string">'准备预约：场发射\n'</span> )</span><br><span class="line">    log_.insert(<span class="string">'end'</span>,<span class="string">'%s\n'</span> % (datetime.fromtimestamp(st).strftime(<span class="string">'%a  %Y-%m-%d %H:%M:%S'</span>)))</span><br><span class="line">    log_.insert(<span class="string">'end'</span>,<span class="string">'%s\n'</span> % (datetime.fromtimestamp(et).strftime(<span class="string">'     %Y-%m-%d %H:%M:%S'</span>)))</span><br><span class="line">    <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">        c = datetime.now().timestamp()</span><br><span class="line">        <span class="comment">#设置子线程开始登录时间为 -40s</span></span><br><span class="line">        <span class="keyword">if</span> et - <span class="number">604800</span> - <span class="number">40</span> &lt; c:</span><br><span class="line">            <span class="keyword">with</span> open(<span class="string">'users.txt'</span>,<span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">                userdicts = json.loads(f.read())</span><br><span class="line">            userdict = userdicts[name]</span><br><span class="line">            <span class="keyword">if</span> equipment == <span class="number">1</span>:</span><br><span class="line">                userdict = userdicts[<span class="string">'%s'</span> % name]</span><br><span class="line">                log_.insert(<span class="string">'end'</span>,<span class="string">'开始登录...\n'</span>)</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):     </span><br><span class="line">                    a = OrderTEM_1(userdict[<span class="string">'username'</span>],userdict[<span class="string">'pwd'</span>], userdict[<span class="string">'payload'</span>], userdict[<span class="string">'id'</span>], st, et, sample, project, i) </span><br><span class="line">                    p = Thread(target = a.main_1)</span><br><span class="line">                    p.daemon = <span class="keyword">True</span></span><br><span class="line">                    p.start()</span><br><span class="line">                sleep(<span class="number">15</span>)</span><br><span class="line">                log_.insert(<span class="string">'end'</span>,<span class="string">'开始交表...\n'</span>)</span><br><span class="line">            <span class="keyword">elif</span> equipment == <span class="number">2</span>:</span><br><span class="line">                userdict = userdicts[<span class="string">'%s'</span> % name]</span><br><span class="line">                log_.insert(<span class="string">'end'</span>,<span class="string">'开始登录...、\n'</span>)</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">                    b = OrderTEM_2(userdict[<span class="string">'username'</span>],userdict[<span class="string">'pwd'</span>], userdict[<span class="string">'payload'</span>], userdict[<span class="string">'id'</span>], st, et, sample, project, j)</span><br><span class="line">                    q = Thread(target = b.main_2)</span><br><span class="line">                    q.daemon = <span class="keyword">True</span></span><br><span class="line">                    q.start()</span><br><span class="line">                sleep(<span class="number">15</span>)</span><br><span class="line">                log_.insert(<span class="string">'end'</span>,<span class="string">'开始交表...\n'</span>)</span><br><span class="line">            sleep(<span class="number">35</span>)</span><br><span class="line">            checkit = check(userdict[<span class="string">'username'</span>], userdict[<span class="string">'pwd'</span>] , st, et , name, equipment)</span><br><span class="line">            checkit.login_check()</span><br><span class="line">            form_data = checkit.perpareform_check()</span><br><span class="line">            dict_ = checkit.checking(form_data)</span><br><span class="line">            content = dict_[<span class="string">'content'</span>]</span><br><span class="line">            name = search(checkit.username, content)</span><br><span class="line">            <span class="keyword">if</span> name:</span><br><span class="line">                log_.insert(<span class="string">'end'</span>,<span class="string">'预约成功'</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                log_.insert(<span class="string">'end'</span>,<span class="string">'预约失败'</span>)</span><br><span class="line">            <span class="keyword">break</span>        </span><br><span class="line">        sleep(<span class="number">10</span>)</span><br></pre></td></tr></table></figure><br>&emsp;&emsp;这里面有个多出来的check模块，它的功能是可以检测本次预约是否成功并返回结果，是根据本次目标时间爬取网站上该时间段预约人的名字与用户名对比判断的，比较简单，就不赘述了。</p>
+<h3 id="图形化设计"><a href="#图形化设计" class="headerlink" title="图形化设计"></a>图形化设计</h3><p>&emsp;&emsp;为了方便程序，图形化软件。整合输入参数，除账号之外，预约实验需要添加的信息有时间选择(自定义|默认)，实验选择，样品，项目编号等。通过python自带的Tkinter库简易实现图形化，编写代码如下:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gui</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Getten图形化</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        开始运行</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        tem = vartem.get()</span><br><span class="line">        time = vartime.get()</span><br><span class="line">        name = ename.get().strip()</span><br><span class="line">        account = eaccont.get()</span><br><span class="line">        sample = esample.get()</span><br><span class="line">        date = edate.get().strip()</span><br><span class="line">        date2 = comdate2.get()</span><br><span class="line">        project = comproject.get()</span><br><span class="line">        <span class="keyword">if</span> tem <span class="keyword">and</span> time <span class="keyword">and</span> name <span class="keyword">and</span> account <span class="keyword">and</span> sample <span class="keyword">and</span> project:</span><br><span class="line">            <span class="keyword">if</span> time == <span class="string">'userdefind'</span>:</span><br><span class="line">                <span class="keyword">if</span> len(date) == <span class="number">8</span>:</span><br><span class="line">                    date = &#123;<span class="string">'year'</span>:int(date[:<span class="number">4</span>]),<span class="string">'month'</span>:int(date[<span class="number">4</span>:<span class="number">6</span>]),<span class="string">'day'</span>:int(date[<span class="number">6</span>:<span class="number">8</span>])&#125;</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    tk.messagebox.showerror(<span class="string">'错误'</span>, <span class="string">'自定义时间有误?'</span>)</span><br><span class="line">            <span class="keyword">with</span> open(<span class="string">'users.txt'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">                userdicts = json.loads(f.read())</span><br><span class="line">            <span class="keyword">if</span> name <span class="keyword">in</span> userdicts:</span><br><span class="line">                <span class="keyword">if</span> account != userdicts[name][<span class="string">'username'</span>]:</span><br><span class="line">                    tk.messagebox.showerror(<span class="string">'错误'</span>,<span class="string">'用户名与账号不匹配'</span>)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    th = Thread(target = gettem, args=(name, tem, sample, project, time, log_, date, date2))</span><br><span class="line">                    th.daemon = <span class="keyword">True</span></span><br><span class="line">                    th.start()</span><br><span class="line">                    runbutton.config(state = <span class="string">'disabled'</span>)</span><br><span class="line">                    ename.config(state = <span class="string">'disabled'</span>)</span><br><span class="line">                    eaccont.config(state = <span class="string">'disabled'</span>)</span><br><span class="line">                    esample.config(state = <span class="string">'disabled'</span>)</span><br><span class="line">                    edate.config(state = <span class="string">'disabled'</span>)</span><br><span class="line">                    comdate2.config(state = <span class="string">'disabled'</span>)</span><br><span class="line">                    comproject.config(state = <span class="string">'disabled'</span>)</span><br><span class="line">                    rtem1.config(state = <span class="string">'disabled'</span>)</span><br><span class="line">                    rtem2.config(state = <span class="string">'disabled'</span>)</span><br><span class="line">                    rtime1.config(state = <span class="string">'disabled'</span>)</span><br><span class="line">                    rtime2.config(state = <span class="string">'disabled'</span>)</span><br><span class="line">                    signbutton.config(state = <span class="string">'disabled'</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                t = tk.messagebox.askokcancel(<span class="string">'注册'</span>,<span class="string">'你还没注册,请先注册吧'</span>)</span><br><span class="line">                <span class="keyword">if</span> t == <span class="keyword">True</span>:</span><br><span class="line">                    sign()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            tk.messagebox.showerror(<span class="string">'错误'</span>,<span class="string">'有信息未填，请检查。'</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">quit</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        关闭</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        os._exit(<span class="number">0</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">datef</span><span class="params">()</span>:</span></span><br><span class="line">        edate.config(state = <span class="string">'disable'</span>)</span><br><span class="line">        comdate2.config(state = <span class="string">'disable'</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">datef2</span><span class="params">()</span>:</span></span><br><span class="line">        edate.config(state = <span class="string">'normal'</span>)</span><br><span class="line">        comdate2.config(state = <span class="string">'readonly'</span>)</span><br><span class="line">    window = tk.Tk()</span><br><span class="line">    window.title(<span class="string">'Gettem'</span>)</span><br><span class="line">    window.geometry(<span class="string">'200x500+600+150'</span>)</span><br><span class="line">    window.resizable(width = <span class="keyword">False</span>, height = <span class="keyword">False</span>)</span><br><span class="line">    window.protocol(<span class="string">"WM_DELETE_WINDOW"</span>, quit)</span><br><span class="line">    <span class="comment">#框架，图片</span></span><br><span class="line">    mainframe = tk.Frame(window, bg = <span class="string">'White'</span>)</span><br><span class="line">    mainframe.pack(fill = <span class="string">'both'</span>, expand = <span class="number">1</span>)</span><br><span class="line">    <span class="comment">#labels</span></span><br><span class="line">    linfo = tk.Label(mainframe, text = <span class="string">'使用方法\n1.注册，将姓名及账号进行登记。\n2.注册完成后,选择时间。\n  (默认为下次开放时间)\n\</span></span><br><span class="line"><span class="string">3.填写信息，点击开始。\n  (至少提前30s开始)\n4.保持网络，不关机。\n5.组内同学使用,切勿外传。'</span>, justify = <span class="string">'left'</span>, bg = <span class="string">'White'</span>, wraplength = <span class="number">240</span>,font = (<span class="string">'黑体'</span>,<span class="number">8</span>))</span><br><span class="line">    ltem = tk.Label(text=<span class="string">'TEM：'</span>,font=(<span class="string">'黑体'</span>,<span class="number">10</span>), fg = <span class="string">'DeepSkyBlue'</span>, bg = <span class="string">'White'</span>)</span><br><span class="line">    ltime = tk.Label(text = <span class="string">'时间：'</span>,font=(<span class="string">'黑体'</span>,<span class="number">10</span>), fg = <span class="string">'DeepSkyBlue'</span>, bg = <span class="string">'White'</span>)</span><br><span class="line">    lname = tk.Label(text = <span class="string">'名字：'</span>, font=(<span class="string">'黑体'</span>,<span class="number">10</span>), fg = <span class="string">'DeepSkyBlue'</span>, bg = <span class="string">'White'</span>)</span><br><span class="line">    laccont = tk.Label(text = <span class="string">'账号：'</span>, font=(<span class="string">'黑体'</span>,<span class="number">10</span>), fg = <span class="string">'DeepSkyBlue'</span>, bg = <span class="string">'White'</span>)</span><br><span class="line">    lsample = tk.Label(text = <span class="string">'样品：'</span>, font=(<span class="string">'黑体'</span>,<span class="number">10</span>), fg = <span class="string">'DeepSkyBlue'</span>, bg = <span class="string">'White'</span>)</span><br><span class="line">    ldate = tk.Label(text = <span class="string">'日期：'</span>, font=(<span class="string">'黑体'</span>,<span class="number">10</span>), fg = <span class="string">'DeepSkyBlue'</span>, bg = <span class="string">'White'</span>)</span><br><span class="line">    lparoject = tk.Label(text = <span class="string">'项目：'</span>, font=(<span class="string">'黑体'</span>,<span class="number">10</span>), fg = <span class="string">'DeepSkyBlue'</span>, bg = <span class="string">'White'</span>)</span><br><span class="line">    linfo.place(x = <span class="number">6</span>, y = <span class="number">2</span>)</span><br><span class="line">    ltem.place(x = <span class="number">8</span>, y = <span class="number">110</span>)</span><br><span class="line">    ltime.place(x = <span class="number">8</span>, y = <span class="number">145</span>)</span><br><span class="line">    lname.place(x = <span class="number">8</span>, y = <span class="number">180</span>)</span><br><span class="line">    laccont.place(x = <span class="number">8</span>, y = <span class="number">215</span>)</span><br><span class="line">    lsample.place(x = <span class="number">8</span>, y = <span class="number">250</span>)</span><br><span class="line">    ldate.place(x = <span class="number">8</span>, y = <span class="number">285</span>)    </span><br><span class="line">    lparoject.place(x = <span class="number">8</span>, y = <span class="number">320</span>)</span><br><span class="line">    <span class="comment">#选择按钮</span></span><br><span class="line">    vartem = tk.IntVar()</span><br><span class="line">    vartime = tk.StringVar()</span><br><span class="line">    vartem.set(<span class="number">1</span>)</span><br><span class="line">    vartime.set(<span class="string">'default'</span>)</span><br><span class="line">    rtem1 = tk.Radiobutton(text = <span class="string">'球差'</span>, bg = <span class="string">'White'</span>, variable = vartem, value = <span class="number">1</span>)</span><br><span class="line">    rtem2 = tk.Radiobutton(text = <span class="string">'场发射'</span>, bg = <span class="string">'White'</span>, variable = vartem, value = <span class="number">2</span>)</span><br><span class="line">    rtime1 = tk.Radiobutton(text = <span class="string">'默认'</span>, bg = <span class="string">'White'</span>, variable = vartime, value = <span class="string">'default'</span>, command = datef)</span><br><span class="line">    rtime2 = tk.Radiobutton(text = <span class="string">'自定义'</span>, bg = <span class="string">'White'</span>, variable = vartime, value = <span class="string">'userdefind'</span>, command = datef2)</span><br><span class="line">    rtem1.place(x = <span class="number">60</span>, y = <span class="number">107</span>)</span><br><span class="line">    rtem2.place(x = <span class="number">115</span>, y = <span class="number">107</span>)</span><br><span class="line">    rtime1.place(x = <span class="number">60</span>, y = <span class="number">142</span>)</span><br><span class="line">    rtime2.place(x = <span class="number">115</span>, y = <span class="number">142</span>)</span><br><span class="line">    vardate = tk.StringVar()</span><br><span class="line">    vardate.set((datetime.now() + timedelta(days=<span class="number">7</span>)).strftime(<span class="string">'%Y%m%d'</span>))</span><br><span class="line">    <span class="comment">#输入entry</span></span><br><span class="line">    ename = tk.Entry(bg = <span class="string">'Lightyellow'</span>, width = <span class="number">15</span>, font = (<span class="string">'黑体'</span>,<span class="number">11</span>), highlightcolor = <span class="string">'DeepSkyBlue'</span>,</span><br><span class="line">                     justify = <span class="string">'center'</span>,highlightthickness = <span class="number">1</span>)</span><br><span class="line">    eaccont = tk.Entry(bg = <span class="string">'Lightyellow'</span>, width = <span class="number">15</span>, font = (<span class="string">'黑体'</span>,<span class="number">11</span>), highlightcolor = <span class="string">'DeepSkyBlue'</span>,</span><br><span class="line">                       justify = <span class="string">'center'</span>,highlightthickness = <span class="number">1</span>)</span><br><span class="line">    esample = tk.Entry(bg = <span class="string">'Lightyellow'</span>, width = <span class="number">15</span>, font = (<span class="string">'黑体'</span>,<span class="number">11</span>), highlightcolor = <span class="string">'DeepSkyBlue'</span>,</span><br><span class="line">                       justify = <span class="string">'center'</span>,highlightthickness = <span class="number">1</span>)</span><br><span class="line">    edate = tk.Entry(bg = <span class="string">'Lightyellow'</span>, width = <span class="number">12</span>, font = (<span class="string">'黑体'</span>,<span class="number">8</span>), highlightcolor = <span class="string">'DeepSkyBlue'</span>,</span><br><span class="line">                     justify = <span class="string">'center'</span>,highlightthickness = <span class="number">1</span>, textvariable = vardate, state = <span class="string">'disable'</span>)</span><br><span class="line">    ename.place(x = <span class="number">60</span>, y = <span class="number">180</span>, heigh = <span class="number">25</span>)</span><br><span class="line">    eaccont.place(x = <span class="number">60</span>, y = <span class="number">215</span>, heigh = <span class="number">25</span>)</span><br><span class="line">    esample.place(x = <span class="number">60</span>, y = <span class="number">250</span>, heigh = <span class="number">25</span>)</span><br><span class="line">    edate.place(x = <span class="number">60</span>, y = <span class="number">285</span>, heigh = <span class="number">25</span>)</span><br><span class="line">    <span class="comment">#下拉菜单：project 和 早中晚</span></span><br><span class="line">    vardate2 = StringVar()</span><br><span class="line">    comdate2 = ttk.Combobox(mainframe, width = <span class="number">4</span>, justify = <span class="string">'center'</span>, font = (<span class="string">'宋体'</span>,<span class="number">8</span>), textvariable = vardate2, state = <span class="string">'disable'</span>)</span><br><span class="line">    comdate2[<span class="string">'value'</span>] = (<span class="string">'早'</span>, <span class="string">'中'</span>, <span class="string">'下午'</span>, <span class="string">'晚上'</span>)</span><br><span class="line">    comdate2.place(x = <span class="number">140</span>, y = <span class="number">286</span>, heigh = <span class="number">23</span>)</span><br><span class="line">    comdate2.current(<span class="number">1</span>)</span><br><span class="line">    varproject = IntVar()</span><br><span class="line">    comproject = ttk.Combobox(mainframe, width = <span class="number">17</span>, justify = <span class="string">'center'</span>, font = (<span class="string">'宋体'</span>,<span class="number">8</span>), textvariable = varproject)</span><br><span class="line">    comproject[<span class="string">'value'</span>] = (<span class="number">1074</span>, <span class="number">1084</span>, <span class="number">1180</span>)</span><br><span class="line">    comproject.place(x = <span class="number">60</span>, y = <span class="number">319</span>, heigh = <span class="number">23</span>)</span><br><span class="line">    comproject.current(<span class="number">0</span>)</span><br><span class="line">    <span class="comment">#buttons</span></span><br><span class="line">    runbutton = tk.Button(width = <span class="number">8</span>, height = <span class="number">1</span>, text = <span class="string">'开始'</span>, font = (<span class="string">'黑体'</span>, <span class="number">11</span>), bg = <span class="string">'Aliceblue'</span>, fg = <span class="string">'DeepSkyBlue'</span>, relief = <span class="string">'ridge'</span>, bd = <span class="number">2</span>, cursor = <span class="string">'target'</span>, command = run)</span><br><span class="line">    signbutton = tk.Button(text = <span class="string">'注册'</span>, font = (<span class="string">'黑体'</span>, <span class="number">9</span>), bg = <span class="string">'White'</span>, fg = <span class="string">'Red'</span>, bd = <span class="number">0</span>,  cursor = <span class="string">'target'</span>, command = sign)</span><br><span class="line">    runbutton.place(x = <span class="number">60</span>, y = <span class="number">350</span>)</span><br><span class="line">    signbutton.place(x = <span class="number">150</span>, y = <span class="number">360</span>)</span><br><span class="line">    log_ = scrolledtext.ScrolledText(width = <span class="number">250</span>, height = <span class="number">10</span>, font = (<span class="string">'宋体'</span>, <span class="number">10</span>, <span class="string">' bold'</span>), relief = <span class="string">'sunken'</span>, bg = <span class="string">'Lightyellow'</span>, wrap=tk.WORD)</span><br><span class="line">    log_.place(y = <span class="number">390</span>)</span><br><span class="line">    window.mainloop()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sign</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    账号注册</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">user_sign_check</span><span class="params">(event)</span>:</span></span><br><span class="line">        sign_user_pwd = enew_pwd.get()</span><br><span class="line">        sign_user_name = enew_username.get()</span><br><span class="line">        sign_user_account = enew_account.get()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> (sign_user_pwd <span class="keyword">and</span> sign_user_name <span class="keyword">and</span> sign_user_account):</span><br><span class="line">            tk.messagebox.showerror(<span class="string">'错误'</span>, <span class="string">'请完整填写信息'</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">with</span> open(<span class="string">'users.txt'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">                    userdicts = json.loads(f.read())</span><br><span class="line">            <span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">                <span class="keyword">with</span> open(<span class="string">'users.txt'</span>, <span class="string">'w'</span>) <span class="keyword">as</span> f:</span><br><span class="line">                    userdicts = &#123;<span class="string">'name'</span>: &#123;&#125;&#125;</span><br><span class="line">                    t = json.dumps(userdicts)</span><br><span class="line">                    f.write(t)</span><br><span class="line">            <span class="keyword">if</span> sign_user_name <span class="keyword">in</span> userdicts:</span><br><span class="line">                tk.messagebox.showerror(<span class="string">'错误'</span>, <span class="string">'你已经注册过了...'</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                st = getst(<span class="string">'default'</span>).default()</span><br><span class="line">                et = st + <span class="number">10799</span></span><br><span class="line">                <span class="comment">#b = OrderTEM_2(userdict['username'],userdict['pwd'], userdict['payload'], userdict['id'], st, et, sample, project, j)</span></span><br><span class="line">                check_ = OrderTEM_1(sign_user_account, sign_user_pwd, <span class="string">''</span>, <span class="string">''</span>, st, et,<span class="string">'hf'</span> , <span class="number">1000</span>, <span class="number">0</span>)</span><br><span class="line">                t = check_.login_sign()</span><br><span class="line">                <span class="keyword">if</span> t == <span class="number">-2</span>:</span><br><span class="line">                    tk.messagebox.showerror(<span class="string">'错误'</span>,<span class="string">'网络异常，请检查'</span>)</span><br><span class="line">                <span class="keyword">elif</span> t == <span class="number">-1</span>:</span><br><span class="line">                    tk.messagebox.showerror(<span class="string">'错误'</span>, <span class="string">'账号不存在或密码错误'</span>)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    id_ = t</span><br><span class="line">                    post_url, browser_id, st2, ed, form_token, cal_week_rel = check_.perpareform_1()</span><br><span class="line">                    payload = check_.get_payload(post_url, browser_id, st2, ed, form_token, cal_week_rel)</span><br><span class="line">                    userdicts[sign_user_name] = &#123;<span class="string">'username'</span>:sign_user_account, <span class="string">'pwd'</span>:sign_user_pwd, <span class="string">'payload'</span>:payload, <span class="string">'id'</span>:id_&#125;</span><br><span class="line">                    <span class="keyword">with</span> open(<span class="string">'users.txt'</span>, <span class="string">'w'</span>) <span class="keyword">as</span> f:</span><br><span class="line">                        t = json.dumps(userdicts)</span><br><span class="line">                        f.write(t)</span><br><span class="line">                    tk.messagebox.showinfo(<span class="string">'OK'</span>, <span class="string">'注册成功！'</span>)</span><br><span class="line">                    win_sign.destroy()</span><br><span class="line">    win_sign = tk.Toplevel()</span><br><span class="line">    win_sign.title(<span class="string">'注册'</span>)</span><br><span class="line">    win_sign.geometry(<span class="string">'250x200+650+300'</span>)</span><br><span class="line">    mainframe = tk.Frame(win_sign, bg = <span class="string">'White'</span>)</span><br><span class="line">    mainframe.pack(fill=<span class="string">'both'</span> ,expand=<span class="number">1</span>)</span><br><span class="line">    lname = tk.Label(win_sign,text=<span class="string">'*姓名：'</span>,font=(<span class="string">'黑体'</span>,<span class="number">10</span>), fg = <span class="string">'DeepSkyBlue'</span>, bg = <span class="string">'White'</span>)</span><br><span class="line">    laccount = tk.Label(win_sign, text = <span class="string">'*账号：'</span>,font=(<span class="string">'黑体'</span>,<span class="number">10</span>), fg = <span class="string">'DeepSkyBlue'</span>, bg = <span class="string">'White'</span>)</span><br><span class="line">    lpwd = tk.Label(win_sign, text = <span class="string">'*密码：'</span>, font=(<span class="string">'黑体'</span>,<span class="number">10</span>), fg = <span class="string">'DeepSkyBlue'</span>, bg = <span class="string">'White'</span>)</span><br><span class="line">    lname.place(x = <span class="number">10</span>, y = <span class="number">20</span>)</span><br><span class="line">    laccount.place(x = <span class="number">10</span>, y = <span class="number">60</span>)</span><br><span class="line">    lpwd.place(x = <span class="number">10</span>, y = <span class="number">100</span>)</span><br><span class="line">    enew_username = tk.Entry(win_sign, bg = <span class="string">'Lightyellow'</span>, width = <span class="number">20</span>, font = (<span class="string">'黑体'</span>,<span class="number">11</span>), highlightcolor = <span class="string">'DeepSkyBlue'</span>,</span><br><span class="line">               justify = <span class="string">'center'</span>,highlightthickness = <span class="number">1</span>)</span><br><span class="line">    enew_account = tk.Entry(win_sign, bg = <span class="string">'Lightyellow'</span>, width = <span class="number">20</span>, font = (<span class="string">'黑体'</span>,<span class="number">11</span>), highlightcolor = <span class="string">'DeepSkyBlue'</span>,</span><br><span class="line">               justify = <span class="string">'center'</span>,highlightthickness = <span class="number">1</span>)</span><br><span class="line">    enew_pwd = tk.Entry(win_sign, bg = <span class="string">'Lightyellow'</span>, width = <span class="number">20</span>, font = (<span class="string">'黑体'</span>,<span class="number">11</span>), highlightcolor = <span class="string">'DeepSkyBlue'</span>,</span><br><span class="line">               justify = <span class="string">'center'</span>,highlightthickness = <span class="number">1</span>,show = <span class="string">'*'</span>)</span><br><span class="line">    enew_username.place(x = <span class="number">60</span>, y = <span class="number">20</span>, heigh = <span class="number">25</span>)</span><br><span class="line">    enew_account.place(x = <span class="number">60</span>, y = <span class="number">60</span>, heigh = <span class="number">25</span>)</span><br><span class="line">    enew_pwd.place(x = <span class="number">60</span>, y = <span class="number">100</span>, heigh = <span class="number">25</span>)</span><br><span class="line">    signbutton = tk.Button(win_sign, text=<span class="string">'注册'</span>,font=(<span class="string">'黑体'</span>,<span class="number">14</span>), fg = <span class="string">'DeepSkyBlue'</span>, bg = <span class="string">'White'</span>, relief = <span class="string">'ridge'</span>, bd = <span class="number">0</span>, command = (<span class="keyword">lambda</span> : user_sign_check(<span class="number">1</span>)))</span><br><span class="line">    signbutton.place(x = <span class="number">100</span>, y = <span class="number">140</span>)</span><br><span class="line">    enew_username.bind(<span class="string">"&lt;Return&gt;"</span>, user_sign_check)</span><br><span class="line">    enew_pwd.bind(<span class="string">"&lt;Return&gt;"</span>, user_sign_check)</span><br><span class="line">    enew_account.bind(<span class="string">"&lt;Return&gt;"</span>, user_sign_check)</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>&emsp;&emsp;考虑到程序安全性，可以先把交给课题组某个同学负责，然后其他同学都可以让负责的同学帮忙预约实验，而添加注册功能就可以同学第一次先注册后，以后则不用告诉负责同学密码，只需输入姓名和账户名即可，这样不仅保护了同学密码，也保护了软件。<br>&emsp;&emsp;主要界面<br><img src="/2018/07/03/Gettem/run.png" alt="img"><br>&emsp;&emsp;注册界面<br><img src="/2018/07/03/Gettem/sign.png" alt="img"><br>&emsp;&emsp;开始运行<br><img src="/2018/07/03/Gettem/run2.png" alt="img"></p>
+<h2 id="转换成exe文件，便于操作与分享。"><a href="#转换成exe文件，便于操作与分享。" class="headerlink" title="转换成exe文件，便于操作与分享。"></a>转换成exe文件，便于操作与分享。</h2><p>&emsp;&emsp;通过pyInstaller将py转换成exe，需要安装pywin32库。在命令行中输入<code>python pyinstaller.py -F Gettem.py</code>。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>&emsp;&emsp;好了，基本工作就到此就基本完成了。接下来就是测试这个程序好不好使，至少到目前为止，共预约5次，每次都成功预约，成功率达到100%。如果以后要改进程序的话，可以从以下几个方面考虑：  </p>
+<ol>
+<li>增加线程数，经测试，增加线程可以一定程度上提高提交频率，但有上限值，因为网络瓶颈。</li>
+<li>将同步改成异步，使得每次发送请求后不用等到返回，在一定时间内继续发送，这样不仅可以提高提交频率并且可以使发送请求的时间间隔更加均匀。但这将要大刀阔斧更改程序，还需要把多线程改为多进程，需要一定工作量。</li>
+<li>将多线程转换成多进程，因为python的GIL锁缘故，多线程并不是真正意义上的多线程，只是并发了，那为什么这里要设置多线程呢，因为在一个线程发送请求时还没返回时这是一个I/O操作，这个等待的时间就会让其他线程去发送请求了，所以还是可以提高发送请求速度。但CPU还是只用一个CPU，而如果用多进程的话，就可以更大利用资源，不过Gettem需要CPU资源实在很少，所以多进程的作用不太理想。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/17/python/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/01/2018-09-1-Docmanager/" rel="prev" title="Python开发：文献下载管理软件DocManger">
+                Python开发：文献下载管理软件DocManger <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODUzNy8xNTA2NQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.png"
+                alt="lk" />
+            
+              <p class="site-author-name" itemprop="name">lk</p>
+              <p class="site-description motion-element" itemprop="description">雨过天晴</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#项目背景"><span class="nav-number">1.</span> <span class="nav-text">项目背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工具介绍"><span class="nav-number">2.</span> <span class="nav-text">工具介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fiddler"><span class="nav-number">2.1.</span> <span class="nav-text">Fiddler:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Requests"><span class="nav-number">2.2.</span> <span class="nav-text">Requests:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tkinter"><span class="nav-number">2.3.</span> <span class="nav-text">Tkinter:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#requests模拟登录"><span class="nav-number">3.</span> <span class="nav-text">requests模拟登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#requests模拟发送请求"><span class="nav-number">4.</span> <span class="nav-text">requests模拟发送请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化程序功能-自动计算预约时间；注册功能；图形化设计"><span class="nav-number">5.</span> <span class="nav-text">优化程序功能; 自动计算预约时间；注册功能；图形化设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自动计算预约时间"><span class="nav-number">5.1.</span> <span class="nav-text">自动计算预约时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多个实验预约整合在一起-多线程"><span class="nav-number">5.2.</span> <span class="nav-text">多个实验预约整合在一起; 多线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图形化设计"><span class="nav-number">5.3.</span> <span class="nav-text">图形化设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转换成exe文件，便于操作与分享。"><span class="nav-number">6.</span> <span class="nav-text">转换成exe文件，便于操作与分享。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lk</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("NQBv7dCcFTcUQHskEHNrW0bO-gzGzoHsz", "3LJgnmIsRHhy8yXfu5ec8mVF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

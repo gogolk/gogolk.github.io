@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="爬虫," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="gogolk" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="&amp;emsp;&amp;emsp;绝大多数文献网站都需要权限才能进行文献下载，高校统一购买了权限，让师生在校内在校园网上免费使用。但是这就意味着学校之外想查阅文献无法立即查阅下载。通过scrapy-redis，把文献相关信息整理入库，并分类将文献下载到本地，实现一个本地文献数据库。&amp;emsp;&amp;emsp;1. 项目背景。&amp;emsp;&amp;emsp;2. 工具介绍。&amp;emsp;&amp;emsp;3. scrapy爬取文">
+<meta name="keywords" content="爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python开发：文献下载管理软件DocManger">
+<meta property="og:url" content="http://yoursite.com/2018/09/01/2018-09-1-Docmanager/index.html">
+<meta property="og:site_name" content="gogolk">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;绝大多数文献网站都需要权限才能进行文献下载，高校统一购买了权限，让师生在校内在校园网上免费使用。但是这就意味着学校之外想查阅文献无法立即查阅下载。通过scrapy-redis，把文献相关信息整理入库，并分类将文献下载到本地，实现一个本地文献数据库。&amp;emsp;&amp;emsp;1. 项目背景。&amp;emsp;&amp;emsp;2. 工具介绍。&amp;emsp;&amp;emsp;3. scrapy爬取文">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/09/01/2018-09-1-Docmanager/redis.png">
+<meta property="og:image" content="http://yoursite.com/2018/09/01/2018-09-1-Docmanager/mysql.png">
+<meta property="og:image" content="http://yoursite.com/2018/09/01/2018-09-1-Docmanager/doc.png">
+<meta property="og:updated_time" content="2018-09-19T12:54:36.411Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python开发：文献下载管理软件DocManger">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;绝大多数文献网站都需要权限才能进行文献下载，高校统一购买了权限，让师生在校内在校园网上免费使用。但是这就意味着学校之外想查阅文献无法立即查阅下载。通过scrapy-redis，把文献相关信息整理入库，并分类将文献下载到本地，实现一个本地文献数据库。&amp;emsp;&amp;emsp;1. 项目背景。&amp;emsp;&amp;emsp;2. 工具介绍。&amp;emsp;&amp;emsp;3. scrapy爬取文">
+<meta name="twitter:image" content="http://yoursite.com/2018/09/01/2018-09-1-Docmanager/redis.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/01/2018-09-1-Docmanager/"/>
+
+
+
+
+
+  <title>Python开发：文献下载管理软件DocManger | gogolk</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">gogolk</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">开弓没有回头箭</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-message">
+          <a href="/message" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/01/2018-09-1-Docmanager/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lk">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gogolk">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python开发：文献下载管理软件DocManger</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-01T13:54:20+08:00">
+                2018-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/项目/" itemprop="url" rel="index">
+                    <span itemprop="name">项目</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/01/2018-09-1-Docmanager/" class="leancloud_visitors" data-flag-title="Python开发：文献下载管理软件DocManger">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&emsp;&emsp;绝大多数文献网站都需要权限才能进行文献下载，高校统一购买了权限，让师生在校内在校园网上免费使用。但是这就意味着学校之外想查阅文献无法立即查阅下载。通过scrapy-redis，把文献相关信息整理入库，并分类将文献下载到本地，实现一个本地文献数据库。<br>&emsp;&emsp;<strong>1.</strong> 项目背景。<br>&emsp;&emsp;<strong>2.</strong> 工具介绍。<br>&emsp;&emsp;<strong>3.</strong> scrapy爬取文献信息集合入redis。<br>&emsp;&emsp;<strong>4.</strong> 将redis中文献集合去重本地已有文献，只留下新文献集合。<br>&emsp;&emsp;<strong>5.</strong> 爬取新文献详细信息。<br>&emsp;&emsp;<strong>6.</strong> 新文献下载。<br>&emsp;&emsp;<strong>7.</strong> 总结。<br><a id="more"></a>  </p>
+<h2 id="项目背景"><a href="#项目背景" class="headerlink" title="项目背景"></a>项目背景</h2><p>&emsp;&emsp;校外无法下载查阅的文献，通过提前将文献批量下载到本地，如果有需要，在本地查询即可。并且所得信息可以获取更多有意思的数据。</p>
+<h2 id="工具介绍"><a href="#工具介绍" class="headerlink" title="工具介绍"></a>工具介绍</h2><h3 id="Scrapy"><a href="#Scrapy" class="headerlink" title="Scrapy"></a><a href="&#39;https://doc.scrapy.org/en/latest/intro/tutorial.html&#39;">Scrapy</a></h3><p>Scrapy是一个为了爬取网站数据，提取结构性数据而编写的应用框架。 可以应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中。</p>
+<p>其主要分为5个部分，engine，download，scheduler，spider，pipeline。engine是调度整个爬虫框架其余部件的核心。scheduler管理request，scheduler发送request给download去下载，然后获得response给spider，spider解析网页将新的request给scheduler，将数据item发给pipeline去处理，pipeline做数据处理，存储等工作。</p>
+<h3 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a><a href="&#39;https://redis.io/&#39;">Redis</a></h3><p>REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。</p>
+<p>Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。</p>
+<p>它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Map), 列表(list), 集合(sets) 和 有序集合(sorted sets)等类型。</p>
+<h3 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a><a href="&#39;https://www.mysql.com/&#39;">Mysql</a></h3><p>MySQL 是最流行的关系型数据库管理系统，在WEB应用方面 MySQL 是最好的RDBMS(Relational Database Management System：关系数据库管理系统)应用软件之一。</p>
+<h2 id="scrapy爬取文献信息集合入redis"><a href="#scrapy爬取文献信息集合入redis" class="headerlink" title="scrapy爬取文献信息集合入redis"></a>scrapy爬取文献信息集合入redis</h2><p>&emsp;&emsp;首先说下思路，因为文献每天都有更新，所以如果要再次下新的文献，就得和已在数据库中的文献去重，所以先爬取网站上的文献标题和文献下载地址，然后和数据库中的文献标题做去重，再将这些新文献数据加载到数据库中。为什么不直接将新的数据去重写数据库呢，因为我想在数据库中保留其他的信息，比如文献abstract，而elsevier上搜索列表上没有相关文献的abstract，需要再发送一个get请求才可以获得，所以如果要更新全部的，则每个文献就发一个request，更新就会很慢。所以先做去重，再入库。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#Docmanger目录结构</span><br><span class="line">.</span><br><span class="line">│</span><br><span class="line">├── Docmanager</span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   ├── items.py</span><br><span class="line">│   ├── middlewares.py</span><br><span class="line">│   ├── pipelines.py</span><br><span class="line">│   ├── settings.py</span><br><span class="line">│   ├── useragent.py</span><br><span class="line">│   ├── spiders</span><br><span class="line">│   │   ├── __init__.py</span><br><span class="line">│   │   └── Docmanager.py</span><br><span class="line">│   └── myextensions</span><br><span class="line">│       └──idle.py</span><br><span class="line">├── main.py</span><br><span class="line">├── mysql_to_redis.py</span><br><span class="line">├── redis_to<span class="selector-class">.mysql</span><span class="selector-class">.py</span></span><br><span class="line">├── docdownload.py</span><br><span class="line">└── scrapy.cfg</span><br></pre></td></tr></table></figure> 
+<p>main.py是调度整个程序执行的脚本，从输入key到爬取新的文献信息入库mysql。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#main.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Docmanager</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, key, num)</span>:</span></span><br><span class="line">        self.key = key</span><br><span class="line">        self.num = num</span><br><span class="line">        self.r = <span class="keyword">None</span></span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">push_start_urls</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.r.flushdb()</span><br><span class="line">        <span class="keyword">if</span> self.num &lt;= <span class="number">25</span>:</span><br><span class="line">            self.r.lpush(<span class="string">'Docmanager:start_urls'</span>, <span class="string">"https://www.sciencedirect.com/search?qs=%s&amp;show=25&amp;sortBy=relevance&amp;offset=0"</span> % self.key)</span><br><span class="line">        <span class="keyword">elif</span> self.num &lt;= <span class="number">50</span>:</span><br><span class="line">            self.r.lpush(<span class="string">'Docmanager:start_urls'</span>, <span class="string">"https://www.sciencedirect.com/search?qs=%s&amp;show=50&amp;sortBy=relevance&amp;offset=0"</span> % self.key)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">for</span> offset <span class="keyword">in</span> range(<span class="number">0</span>, self.num + <span class="number">1</span> - <span class="number">100</span>, <span class="number">100</span>):</span><br><span class="line">                self.r.lpush(<span class="string">'Docmanager:start_urls'</span>, <span class="string">"https://www.sciencedirect.com/search?qs=%s&amp;show=100&amp;sortBy=relevance&amp;offset=%d"</span> % (self.key,offset)) </span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.pool = redis.ConnectionPool(host=<span class="string">'127.0.0.1'</span>, port=<span class="number">6379</span>, db=<span class="number">0</span>)</span><br><span class="line">        self.r = redis.Redis(connection_pool=self.pool)</span><br><span class="line">        self.push_start_urls()</span><br><span class="line">        cmdline.execute((<span class="string">"scrapy crawl Docmanager"</span>).split())</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    key = <span class="string">'hafnium'</span></span><br><span class="line">    num = <span class="number">5000</span></span><br><span class="line">    <span class="keyword">with</span> ProcessPoolExecutor(max_workers=<span class="number">8</span>) <span class="keyword">as</span> executor:</span><br><span class="line">        executor.submit(Docmanager(key, num).main)</span><br><span class="line">        executor(mysqltoredis(key).main)</span><br><span class="line">        executor.map(main, [key]*<span class="number">3</span>)</span><br></pre></td></tr></table></figure>  
+<p>&emsp;&emsp;key是文献的关键字，num为想要搜索的文献数量。通过push_start_urls()更具key，num将初始url加载到redis，用来redis开始爬取网页。注意到url中的how为每页文献数量，最高为100<br>接下来我们分析需要的结构性数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#items.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DocItem</span><span class="params">(scrapy.Item)</span>:</span></span><br><span class="line">    <span class="comment"># define the fields for your item here like:</span></span><br><span class="line">    <span class="comment"># name = scrapy.Field()</span></span><br><span class="line">    title = scrapy.Field() <span class="comment">#文献标题</span></span><br><span class="line">    authors = scrapy.Field() <span class="comment">#文献作者</span></span><br><span class="line">    journal = scrapy.Field() <span class="comment">#文献所发表的杂志名称</span></span><br><span class="line">    date = scrapy.Field() <span class="comment">#文献发表日期</span></span><br><span class="line">    downloadlink = scrapy.Field() <span class="comment">#文献下载链接</span></span><br><span class="line">    link = scrapy.Field() <span class="comment">#文献url</span></span><br><span class="line">    abstractlink = scrapy.Field() <span class="comment">#文献摘要url</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;接下来，需要编写spider，因为用得是redis存储，所以用的是RedisSpider。需要在setting增加一些内容，request队列，去重，调度器以及redis的url.<br>另外，为了更加模拟浏览器防止服务器拒绝访问，在downloadmiddleware中添加一个中间件，随机修改请求头的User-Agent。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#middlewares.py  </span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserAgentmiddleware</span><span class="params">(UserAgentMiddleware)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_request</span><span class="params">(self, request, spider)</span>:</span></span><br><span class="line">        agent = random.choice(agents) <span class="comment">#agents 是一个列表，包含大量合法的User-Agent</span></span><br><span class="line">        request.headers[<span class="string">"User-Agent"</span>] = agent</span><br></pre></td></tr></table></figure>
+<p>然后修改setting中DOWNLOADER_MIDDLEWARES即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#spider.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DocSpider</span><span class="params">(RedisSpider)</span>:</span></span><br><span class="line">    name = <span class="string">"Docmanager"</span></span><br><span class="line">    redis_key = <span class="string">"Docmanager:start_urls"</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *args, **kwargs)</span>:</span></span><br><span class="line">        super(DocSpider, self).__init__(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></span><br><span class="line">        soup = BeautifulSoup(response.text)</span><br><span class="line">        soup = soup.find(<span class="string">'div'</span>, class_=<span class="string">'ResultList col-xs-24'</span>)</span><br><span class="line">        docs_soup = soup.ol.find_all(<span class="string">'li'</span>, recursive=<span class="keyword">False</span>)</span><br><span class="line">        rint(len(docs_soup))</span><br><span class="line">        <span class="keyword">for</span> doc_soup <span class="keyword">in</span> docs_soup:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                doc_soup = doc_soup.find(<span class="string">'div'</span>, class_=<span class="string">'result-item-container u-visited-link'</span>).find(<span class="string">'div'</span>, class_=<span class="string">'result-item-content'</span>, recursive=<span class="keyword">False</span>)</span><br><span class="line">                doc = DocItem()</span><br><span class="line">                doc[<span class="string">'title'</span>] = self.gettitle(doc_soup)</span><br><span class="line">                doc[<span class="string">'authors'</span>] = self.getauthors(doc_soup)</span><br><span class="line">                doc[<span class="string">'journal'</span>] = doc_soup.div.find(<span class="string">'a'</span>, class_=<span class="string">'subtype-srctitle-link'</span>).span.string</span><br><span class="line">	            doc[<span class="string">'link'</span>] = response.urljoin(doc_soup.find(<span class="string">'h2'</span>,recursive=<span class="keyword">False</span>).a[<span class="string">'href'</span>])</span><br><span class="line">	            downloadlink = response.urljoin(doc_soup.find(<span class="string">'div'</span>, class_=<span class="string">'PreviewLinks'</span>).ol.li.span.a[<span class="string">'href'</span>])</span><br><span class="line">                <span class="comment">#有的item是书，不能直接下载，</span></span><br><span class="line">                <span class="keyword">if</span> downloadlink[<span class="number">-1</span>] == <span class="string">'f'</span>:</span><br><span class="line">                    doc[<span class="string">'downloadlink'</span>] = downloadlink</span><br><span class="line">                    <span class="comment">#https://www.sciencedirect.com/search/api/abstract?pii=S1674987118300793</span></span><br><span class="line">                    doc[<span class="string">'abstractlink'</span>] = self.getabstractlink(doc[<span class="string">'downloadlink'</span>])</span><br><span class="line">                    <span class="keyword">yield</span> doc</span><br><span class="line">	            <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">yield</span> doc</span><br><span class="line">                <span class="keyword">except</span>:</span><br><span class="line">                    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">gettitle</span><span class="params">(self, doc_soup)</span>:</span></span><br><span class="line">        <span class="comment">#获得title</span></span><br><span class="line">        ls = list(doc_soup.find(<span class="string">'h2'</span>, recursive=<span class="keyword">False</span>).a.children)</span><br><span class="line">        title = <span class="string">''</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> ls:</span><br><span class="line">            <span class="keyword">if</span> isinstance(i, bs4.element.Tag):</span><br><span class="line">                i = i.string</span><br><span class="line">            <span class="keyword">if</span> i:</span><br><span class="line">                title += i</span><br><span class="line">        <span class="keyword">return</span> title</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getauthors</span><span class="params">(self, doc_soup)</span>:</span></span><br><span class="line">        <span class="comment">#获得author</span></span><br><span class="line">        ls = doc_soup.find(<span class="string">'ol'</span>, class_=[<span class="string">'Authors hor reduce-list'</span>,<span class="string">'Authors hor undefined'</span>]).find_all(<span class="string">'li'</span>, recursive=<span class="keyword">False</span>)</span><br><span class="line">        authors_list = []</span><br><span class="line">        <span class="keyword">for</span> author <span class="keyword">in</span> ls:</span><br><span class="line">            authors_list.append(author.span.string)</span><br><span class="line">        <span class="keyword">return</span> str(authors_list)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getabstractlink</span><span class="params">(self, link)</span>:</span></span><br><span class="line">        <span class="comment">#获得文献abstract链接</span></span><br><span class="line">        pii = re.search(re.compile(<span class="string">r'pii/(.+?)/'</span>), link).group(<span class="number">1</span>)</span><br><span class="line">        abstractlink = <span class="string">'https://www.sciencedirect.com/search/api/abstract?pii=%s'</span> % pii</span><br><span class="line">        <span class="keyword">return</span> abstractlink</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;将item放入pipeline处理，这些item都是从elsevier下载到的最新的num文献数据，还没有摘要信息，首先先要和mysql中已存在的文献对比去重，所以我的想法是，将所有item中title保存在redis一个集合titles，然后根据title:item放入redis中的Hash表items。然后将mysql中的title加载到redis中的一个集合sqltitles。将title和sqltitles并集所得的集合再和sqltitles求差集就可以获得新的文献集合newtitle了。再拿newtitle去和hash表items中取得item入库。代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#pipeline.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DocmanagerPipeline</span><span class="params">(RedisPipeline)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *args, **kwargs)</span>:</span></span><br><span class="line">        super(DocmanagerPipeline, self).__init__(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_process_item</span><span class="params">(self, item, spider)</span>:</span></span><br><span class="line">        key0 = item[<span class="string">'title'</span>]</span><br><span class="line">        key2 = <span class="string">'Docmanager:titles'</span></span><br><span class="line">        data1 = json.dumps(dict(item))</span><br><span class="line">        data2 = key0</span><br><span class="line">        <span class="comment">#hash   title: item</span></span><br><span class="line">        self.server.hset(<span class="string">'Docmanager:items'</span>, key0, data1)</span><br><span class="line">        self.server.sadd(key2, data2)</span><br><span class="line">        <span class="keyword">return</span> item</span><br></pre></td></tr></table></figure></p>
+<h2 id="将redis中文献集合去重本地已有文献，只留下新文献集合。"><a href="#将redis中文献集合去重本地已有文献，只留下新文献集合。" class="headerlink" title="将redis中文献集合去重本地已有文献，只留下新文献集合。"></a>将redis中文献集合去重本地已有文献，只留下新文献集合。</h2><p>&emsp;&emsp;将数据库key表中已有文献title加载到redis中集合sqltitles。<br>mysql-to-redis.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#mysql-to-redis.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">mysqltoredis</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="comment">#通过title将mysql中items和redis中items去重</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, key)</span>:</span></span><br><span class="line">        self.key = <span class="string">'_'</span>.join(key.split(<span class="string">' '</span>))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pushtoredis</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># push the mysql title of docs to redis</span></span><br><span class="line">        cur = self.conn.cursor()</span><br><span class="line">        sql = <span class="string">"SELECT key_word FROM keyword_tbl WHERE key_word=?"</span></span><br><span class="line">        cur.execute(sql.replace(<span class="string">'?'</span>,<span class="string">'%s'</span>), [self.key])</span><br><span class="line">        result = cur.fetchall()</span><br><span class="line">        <span class="keyword">if</span> result:</span><br><span class="line">            sql = <span class="string">"SELECT title From %s"</span> % self.key</span><br><span class="line">            cur.execute(sql)</span><br><span class="line">            <span class="keyword">for</span> title <span class="keyword">in</span> cur.fetchall():</span><br><span class="line">                <span class="comment">#与scrapy_redis.pineline.process_item()一致</span></span><br><span class="line">                self.r.sadd(<span class="string">'Docmanager:sqltitles'</span>, title[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            sql = <span class="string">"INSERT INTO keyword_tbl (key_word) VALUES (?)"</span></span><br><span class="line">            cur.execute(sql.replace(<span class="string">'?'</span>, <span class="string">'%s'</span>), [self.key] <span class="keyword">or</span> ())</span><br><span class="line">            self.conn.commit()</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.conn = pymysql.connect(host=<span class="string">"localhost"</span>, port=<span class="number">3306</span>, user=<span class="string">"root"</span>, passwd=<span class="string">"abc4494355"</span>, db=<span class="string">"docmanager"</span>)</span><br><span class="line">        self.pool = redis.ConnectionPool(host=<span class="string">'127.0.0.1'</span>, port=<span class="number">6379</span>, db=<span class="number">0</span>)</span><br><span class="line">        self.r = redis.Redis(connection_pool=self.pool)</span><br><span class="line">        self.pushtoredis()</span><br></pre></td></tr></table></figure>
+<p>&emsp;&amp;emsp。网页爬取和数据库爬取是分别在两个子进程中同时进行的，但前者比后者需要的时间慢，所以当网页爬取完毕后，就可以进行去重操作。这个操作运用了scrapy自定义扩展功能。这个扩展另外实现在没有新的request一定时间后关闭spider，避免空跑。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#myextension\idle.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AutoRedisSpiderClose</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, idle_number, crawler)</span>:</span></span><br><span class="line">        self.idle_number = idle_number</span><br><span class="line">        self.idle_list = []</span><br><span class="line">        self.idle_count = <span class="number">0</span></span><br><span class="line">        self.crawler = crawler</span><br><span class="line"></span><br><span class="line"><span class="meta">	@classmethod</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">from_crawler</span><span class="params">(cls, crawler)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> crawler.settings.getbool(<span class="string">'MYEXT_ENABLED'</span>):</span><br><span class="line">            <span class="keyword">raise</span> NotConfigured</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> <span class="string">'redis_key'</span> <span class="keyword">in</span> crawler.spidercls.__dict__.keys():</span><br><span class="line">            <span class="keyword">raise</span> NotConfigured(<span class="string">'The type of Spider is not RedisSpider!'</span>)</span><br><span class="line">        idle_number = crawler.settings.getint(<span class="string">'IDLE_NUMBER'</span>, <span class="number">24</span>)</span><br><span class="line">        ext = cls(idle_number, crawler)</span><br><span class="line">        crawler.signals.connect(ext.spider_idle, signal=signals.spider_idle)</span><br><span class="line">        crawler.signals.connect(ext.spider_closed, signal=signals.spider_closed)</span><br><span class="line">        <span class="keyword">return</span> ext</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">spider_closed</span><span class="params">(self, spider)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> spider.name != <span class="string">'Docmanager'</span>:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        pool = redis.ConnectionPool(host=<span class="string">'127.0.0.1'</span>, port=<span class="number">6379</span>, db=<span class="number">0</span>)</span><br><span class="line">        re = redis.Redis(connection_pool = pool)</span><br><span class="line">        <span class="keyword">if</span> re.exists(<span class="string">'Docmanager:sqltitles'</span>):</span><br><span class="line">            re.sunionstore(<span class="string">'Docmanager:titles'</span>, <span class="string">'Docmanager:titles'</span>, <span class="string">'Docmanager:sqltitles'</span>)</span><br><span class="line">            re.sdiffstore(<span class="string">'Docmanager:newtitles'</span>, <span class="string">'Docmanager:titles'</span>, <span class="string">'Docmanager:sqltitles'</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            re.rename(<span class="string">'Docmanager:titles'</span>,<span class="string">'Docmanager:newtitles'</span>)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">spider_idle</span><span class="params">(self, spider)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> spider.name != <span class="string">'Docmanager'</span>:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> spider.server.exists(spider.redis_key):</span><br><span class="line">            self.idle_count += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.idle_count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">if</span> self.idle_count &gt; self.idle_number:</span><br><span class="line">            self.crawler.engine.close_spider(spider, <span class="string">'Waiting %d s have no request, spider closed!'</span> % (self.idle_number*<span class="number">5</span>))</span><br></pre></td></tr></table></figure>
+<p>然后修改setting中的EXTENSION和MYEXT_ENABLED。</p>
+<p>已去重后的新文献集合(RedisDesktopManager)，从网页爬取5000条文献信息时间为1分钟。<br><img src="/2018/09/01/2018-09-1-Docmanager/redis.png" alt="img">  </p>
+<h2 id="爬取新文献详细信息并入库。"><a href="#爬取新文献详细信息并入库。" class="headerlink" title="爬取新文献详细信息并入库。"></a>爬取新文献详细信息并入库。</h2><p>&emsp;&emsp;接下来需要的就是把留下来的文献集合newtitles中的title一个一个的去items中获得item了，获得item后提取摘要链接获得摘要最后存储到mysql。<br>&emsp;&emsp;文献量是很大的，每个文献都需要发送一个新的request，而网络IO是必须考虑到的，一定需要异步，然后就有以下选择，多进程，多线程，协程以及它们的集合。因为文献量是很大的，而多进程和多线程的都有一定上限，而进程，线程间的上下文转换不及协程，但是一个协程也只有一个线程的资源，所以我选择了多进程+协程的，用到了asyncio，aiohttp以及aiomysql。为什么不用scrapy直接异步爬取呢，其实也可以，不过又得在redis中构建一个hash表，因为爬取的摘要要和对应item对应上，一些文献摘要较长，这样redis中所占内存可能会比较大。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line">redis—to-mysql.py  </span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">create_pool</span><span class="params">(loop, **kw)</span>:</span></span><br><span class="line">    <span class="comment">#创建进程池</span></span><br><span class="line">    <span class="keyword">global</span> __pool</span><br><span class="line">    __pool = <span class="keyword">await</span> aiomysql.create_pool(</span><br><span class="line">        host=kw.get(<span class="string">'host'</span>, <span class="string">'127.0.0.1'</span>),</span><br><span class="line">        port=kw.get(<span class="string">'port'</span>, <span class="number">3306</span>),</span><br><span class="line">        user=kw[<span class="string">'user'</span>],</span><br><span class="line">        password=kw[<span class="string">'password'</span>],</span><br><span class="line">        db=kw[<span class="string">'db'</span>],</span><br><span class="line">        charset=kw.get(<span class="string">'charset'</span>, <span class="string">'UTF8MB4'</span>),</span><br><span class="line">        autocommit=kw.get(<span class="string">'autocommit'</span>, <span class="keyword">True</span>),</span><br><span class="line">        maxsize=kw.get(<span class="string">'maxsize'</span>, <span class="number">100</span>),</span><br><span class="line">        minsize=kw.get(<span class="string">'minsize'</span>, <span class="number">1</span>),</span><br><span class="line">        loop=loop</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">connect</span><span class="params">(key)</span>:</span></span><br><span class="line">    <span class="comment">#创建一个名为关键字的新表存储信息，如果表已存在则不创建。</span></span><br><span class="line">    <span class="keyword">global</span> __pool</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> __pool.acquire() <span class="keyword">as</span> conn:</span><br><span class="line">        <span class="keyword">async</span> <span class="keyword">with</span> conn.cursor() <span class="keyword">as</span> cur:</span><br><span class="line">            sql = <span class="string">'CREATE TABLE IF NOT EXISTS %s('</span> \</span><br><span class="line">                  <span class="string">'doc_id INT AUTO_INCREMENT,'</span> \</span><br><span class="line">                  <span class="string">'title VARCHAR(255),'</span> \</span><br><span class="line">                  <span class="string">'authors VARCHAR(255),'</span> \</span><br><span class="line">                  <span class="string">'journal VARCHAR(255),'</span> \</span><br><span class="line">                  <span class="string">'post_data VARCHAR(255),'</span> \</span><br><span class="line">                  <span class="string">'abstract TEXT,'</span> \</span><br><span class="line">                  <span class="string">'link VARCHAR(255),'</span> \</span><br><span class="line">                  <span class="string">'downloadlink VARCHAR(255),'</span> \</span><br><span class="line">                  <span class="string">'PRIMARY KEY (doc_id)'</span> \</span><br><span class="line">                  <span class="string">')ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4'</span> % key</span><br><span class="line">            <span class="keyword">await</span> cur.execute(sql)</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">push_to_mysql</span><span class="params">(r, key)</span>:</span></span><br><span class="line">    <span class="comment">#爬取摘要，并把item持久化存储</span></span><br><span class="line">    <span class="keyword">global</span> __pool, num</span><br><span class="line">    <span class="keyword">global</span> stop <span class="comment">#如果没有newtitle了 stop=True</span></span><br><span class="line">    <span class="keyword">if</span> r.exists((<span class="string">'Docmanager:newtitles'</span>)):</span><br><span class="line">        title = r.spop(<span class="string">'Docmanager:newtitles'</span>)</span><br><span class="line">        item = json.loads(r.hget(<span class="string">'Docmanager:items'</span>, title))</span><br><span class="line">        url = item[<span class="string">'abstractlink'</span>]</span><br><span class="line">        <span class="keyword">if</span> url:</span><br><span class="line">            headers = &#123;<span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'</span>&#125;</span><br><span class="line">            <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> se:</span><br><span class="line">                <span class="keyword">async</span> <span class="keyword">with</span> se.get(url, headers=headers) <span class="keyword">as</span> res:</span><br><span class="line">                    abstract = <span class="keyword">await</span> res.json()</span><br><span class="line">            item[<span class="string">'abstract'</span>] = abstract[<span class="string">'abstracts'</span>][<span class="number">0</span>][<span class="string">'html'</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            item[<span class="string">'abstract'</span>] = <span class="string">'None'</span></span><br><span class="line">        <span class="keyword">async</span> <span class="keyword">with</span> __pool.acquire() <span class="keyword">as</span> conn:</span><br><span class="line">            <span class="keyword">async</span> <span class="keyword">with</span> conn.cursor() <span class="keyword">as</span> cur:</span><br><span class="line">                args = [item[<span class="string">'title'</span>], item[<span class="string">'authors'</span>], item[<span class="string">'journal'</span>], item[<span class="string">'abstract'</span>],</span><br><span class="line">                        item[<span class="string">'link'</span>], item[<span class="string">'downloadlink'</span>], ]</span><br><span class="line">                sql = <span class="string">'INSERT INTO &#123;tbl&#125;'</span> \</span><br><span class="line">                      <span class="string">'(title, authors, journal, abstract, link, downloadlink)'</span> \</span><br><span class="line">                      <span class="string">'VALUES'</span> \</span><br><span class="line">                      <span class="string">'(?, ?, ?, ?, ?, ?)'</span>.format(tbl=key)</span><br><span class="line">                <span class="keyword">await</span> cur.execute(sql.replace(<span class="string">'?'</span>, <span class="string">'%s'</span>), args)</span><br><span class="line">                num += <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        stop = <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">task</span><span class="params">(r,key,thread_loop)</span>:</span></span><br><span class="line">    <span class="comment">#从newtitle中发布新的爬取任务，而爬取任务在子线程中。</span></span><br><span class="line">    <span class="keyword">global</span> stop, num</span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> stop:</span><br><span class="line">        asyncio.run_coroutine_threadsafe(push_to_mysql(r,key), thread_loop)</span><br><span class="line">        <span class="keyword">await</span> asyncio.sleep(<span class="number">0.05</span>)</span><br><span class="line">    <span class="keyword">await</span> asyncio.sleep(<span class="number">15</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">init</span><span class="params">(loop,key)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> stop, num</span><br><span class="line">    stop = <span class="keyword">False</span></span><br><span class="line">    num = <span class="number">0</span></span><br><span class="line">    a = <span class="number">0</span></span><br><span class="line">    r = redis.Redis(connection_pool=redis.ConnectionPool(host=<span class="string">'127.0.0.1'</span>, port=<span class="number">6379</span>, db=<span class="number">0</span>))</span><br><span class="line">    <span class="keyword">while</span> a == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">if</span> r.exists(<span class="string">'Docmanager:newtitles'</span>):</span><br><span class="line">            loop = asyncio.get_event_loop()</span><br><span class="line">            mysqlkw = &#123;<span class="string">'db'</span>: <span class="string">'Docmanager'</span>, <span class="string">'user'</span>: <span class="string">'root'</span>, <span class="string">'password'</span>: <span class="string">'abc4494355'</span>&#125;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">def</span> <span class="title">start_loop</span><span class="params">(th_loop)</span>:</span></span><br><span class="line">                <span class="comment">#运行事件循环， loop以参数的形式传递进来运行</span></span><br><span class="line">                asyncio.set_event_loop(th_loop)</span><br><span class="line">                th_loop.run_forever()</span><br><span class="line"></span><br><span class="line">            thread_loop = asyncio.new_event_loop()</span><br><span class="line">            t2 = threading.Thread(target=start_loop, args=(thread_loop,))</span><br><span class="line">            t2.daemon = <span class="keyword">True</span></span><br><span class="line">            t2.start()</span><br><span class="line">            <span class="keyword">await</span> create_pool(loop, **mysqlkw)</span><br><span class="line">            <span class="keyword">await</span> connect(key)</span><br><span class="line">            <span class="keyword">await</span> task(r, key, thread_loop)</span><br><span class="line">            a = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> r.exists(<span class="string">'Docmanager:newtitles'</span>) <span class="keyword">and</span> <span class="keyword">not</span> r.exists(<span class="string">'Docmanager:titles'</span>):</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            time.sleep(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(key)</span>:</span></span><br><span class="line">    time.sleep(<span class="number">10</span>)</span><br><span class="line">    key = <span class="string">'_'</span>.join(key.split(<span class="string">' '</span>))</span><br><span class="line">    loop = asyncio.get_event_loop()</span><br><span class="line">    loop.run_until_complete(init(loop, key))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这里需要提到的是，程序有两个线程运行，主线程只有一个协程，动态加载任务，而子线程中有多个协程(根据主线程创建的和已经完成的)，每个协程完成一个摘要爬取。5000新文献详细信息入库大概1分钟完成。<br><img src="/2018/09/01/2018-09-1-Docmanager/mysql.png" alt="img"></p>
+<h2 id="新的文献下载"><a href="#新的文献下载" class="headerlink" title="新的文献下载"></a>新的文献下载</h2><p>&emsp;&emsp;毕竟要创建本地文献库，那就不得不下载了，刚刚在mysql中我们已经爬取到了title和downloadlink，就可以通过downloadlink下载文献并保存到title中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#downloaddoc.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">writer</span><span class="params">(args)</span>:</span></span><br><span class="line">    doc,key = args</span><br><span class="line">    filename = doc[<span class="number">0</span>]</span><br><span class="line">    downloadlink = doc[<span class="number">1</span>]</span><br><span class="line">    response = request.urlopen(downloadlink)</span><br><span class="line">    link = re.search(<span class="string">"window\\.location = '(.+?)';"</span>, bytes.decode(response.read(), encoding=<span class="string">'utf8'</span>)).group(<span class="number">1</span>)</span><br><span class="line">    response = request.urlopen(link)</span><br><span class="line">    <span class="keyword">if</span> os.path.exists(<span class="string">r"D:\docs\%s\%s.pdf"</span> % (key, filename)) <span class="keyword">and</span> os.path.getsize(<span class="string">r"D:\docs\%s\%s.pdf"</span> % (key, filename)) &gt; <span class="number">1024</span>:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">r"D:\docs\%s\%s.pdf"</span> % (key, filename), <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">            data = response.read(<span class="number">4096</span>)</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> data:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            f.write(data)</span><br><span class="line">            </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(key, number)</span>:</span></span><br><span class="line">    <span class="comment">#key 文献关键词</span></span><br><span class="line">    <span class="comment">#number 文献数量    </span></span><br><span class="line">    os.mkdir(<span class="string">r"D:\docs"</span>) <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(<span class="string">r"D:\docs"</span>) <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">    os.chdir(<span class="string">r"D:\docs"</span>)</span><br><span class="line">    os.mkdir(<span class="string">r"D:\docs\&#123;&#125;"</span>.format(key)) <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(<span class="string">r"D:\docs\&#123;&#125;"</span>.format(key)) <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">    conn = pymysql.connect(host=<span class="string">'127.0.0.1'</span>, port=<span class="number">3306</span>, db=<span class="string">'docmanager'</span>,user=<span class="string">'root'</span>, passwd=<span class="string">'abc4494355'</span>)</span><br><span class="line">    cur = conn.cursor()</span><br><span class="line">    sql = <span class="string">'SELECT title, downloadlink FROM %s'</span> % <span class="string">'_'</span>.join(key.split(<span class="string">' '</span>))</span><br><span class="line">    cur.execute(sql)</span><br><span class="line">    result = cur.fetchmany(number)</span><br><span class="line">    <span class="keyword">with</span> ProcessPoolExecutor(max_workers=<span class="number">20</span>) <span class="keyword">as</span> executor:</span><br><span class="line">        [executor.submit(writer, (doc, key)) <span class="keyword">for</span> doc <span class="keyword">in</span> result]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main(<span class="string">'hafnium'</span>, <span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;好了，将文献下载到doc中关键字文件夹内，如果下载过的则不会下载。测试100篇文献(200+MB)2分钟下完，和下载一个200MB文档消耗时间相当。<br><img src="/2018/09/01/2018-09-1-Docmanager/doc.png" alt="img"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>&emsp;&emsp;大概内容就这么多了，除了管理和下载外文文献外，其实还可以利用这些信息做下一步的分析，比如统计相关领域的关键词，进行排序后就可以得知目前该领域哪些方向比较热门，还比如统计这个领域大家一般投哪些杂志上等等。</p>
+<ol>
+<li>因为request调度队列，去重都在redis，所以如果数据需求较大，可以共用一个request队列。实现分布式爬虫。</li>
+<li>本次项目主要是以练习为主，熟悉scrapy框架，熟悉redis，mysql操作。</li>
+<li>进一步熟悉python多进程、多线程编程，异步编程等，为以后的项目打下基础。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/03/Gettem/" rel="next" title="项目：Python开发自动预约实验软件Gettem">
+                <i class="fa fa-chevron-left"></i> 项目：Python开发自动预约实验软件Gettem
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/11/PriceCompare/" rel="prev" title="PriceCompare">
+                PriceCompare <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODUzNy8xNTA2NQ=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.png"
+                alt="lk" />
+            
+              <p class="site-author-name" itemprop="name">lk</p>
+              <p class="site-description motion-element" itemprop="description">雨过天晴</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#项目背景"><span class="nav-number">1.</span> <span class="nav-text">项目背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工具介绍"><span class="nav-number">2.</span> <span class="nav-text">工具介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Scrapy"><span class="nav-number">2.1.</span> <span class="nav-text">Scrapy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis"><span class="nav-number">2.2.</span> <span class="nav-text">Redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mysql"><span class="nav-number">2.3.</span> <span class="nav-text">Mysql</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scrapy爬取文献信息集合入redis"><span class="nav-number">3.</span> <span class="nav-text">scrapy爬取文献信息集合入redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将redis中文献集合去重本地已有文献，只留下新文献集合。"><span class="nav-number">4.</span> <span class="nav-text">将redis中文献集合去重本地已有文献，只留下新文献集合。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#爬取新文献详细信息并入库。"><span class="nav-number">5.</span> <span class="nav-text">爬取新文献详细信息并入库。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新的文献下载"><span class="nav-number">6.</span> <span class="nav-text">新的文献下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lk</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("NQBv7dCcFTcUQHskEHNrW0bO-gzGzoHsz", "3LJgnmIsRHhy8yXfu5ec8mVF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
